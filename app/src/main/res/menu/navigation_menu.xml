@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/day"
+        android:icon="@drawable/ic_day"
+        android:iconTint="?attr/colorSecondary"
+        android:title="@string/day"/>
+    <item
+        android:id="@+id/week"
+        android:icon="@drawable/ic_week"
+        android:iconTint="?attr/colorSecondary"
+        android:title="@string/week"/>
+    <item
+        android:id="@+id/month"
+        android:icon="@drawable/ic_month"
+        android:iconTint="?attr/colorSecondary"
+        android:title="@string/month"/>
+</menu>

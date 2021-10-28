@@ -1,0 +1,11 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.Calendula" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!--  App color.  -->
+        <item name="colorPrimary">@color/main</item>
+        <item name="colorOnBackground">@color/white</item>
+        <item name="colorSecondary">@color/black_secondary</item>
+        <!--  Status bar color.  -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorOnBackground</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+    </style>
+</resources>
