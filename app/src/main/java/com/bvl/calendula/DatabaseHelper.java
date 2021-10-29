@@ -2,20 +2,21 @@ package com.bvl.calendula;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-class DatabaseHelper extends SQLiteOpenHelper {
+public class DatabaseHelper extends SQLiteOpenHelper {
 
     private Context context;
     private static final String DB_NAME = "calendula.db";
     private static final int DB_VERSION = 1;
 
     private static final String TABLE_NAME = "data";
-    private static final String COLUMN_ID = "_id";
+    private static final String COLUMN_ID = "id";
     private static final String COLUMN_NAME = "name";
     private static final String COLUMN_DATE = "date";
     private static final String COLUMN_DAY_OF_WEEK = "day_of_week";
@@ -50,6 +51,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
     void add(String name, String date, String day_of_week,
              String periodicity, String time_start, String time_finish,
              String tags, String text_note, String pic_note, String audio_note){
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -73,5 +75,16 @@ class DatabaseHelper extends SQLiteOpenHelper {
         {
             Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public Cursor read(){
+        String query = "SELECT * FROM " + TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
     }
 }
