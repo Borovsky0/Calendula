@@ -18,7 +18,14 @@ class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_ID = "_id";
     private static final String COLUMN_NAME = "name";
     private static final String COLUMN_DATE = "date";
+    private static final String COLUMN_DAY_OF_WEEK = "day_of_week";
+    private static final String COLUMN_PERIODICITY = "periodicity";
+    private static final String COLUMN_TIME_START = "time_start";
+    private static final String COLUMN_TIME_FINISH = "time_finish";
     private static final String COLUMN_TAGS = "tags";
+    private static final String COLUMN_TEXT_NOTE = "text_note";
+    private static final String COLUMN_PIC_NOTE = "pic_note";
+    private static final String COLUMN_AUDIO_NOTE = "audio_note";
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -28,7 +35,9 @@ class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE " + TABLE_NAME + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_NAME + " TEXT, " + COLUMN_DATE + " TEXT, " + COLUMN_TAGS + " TEXT);";
+                COLUMN_NAME + " TEXT, " + COLUMN_DATE + " TEXT, " + COLUMN_DAY_OF_WEEK + " TEXT, " + COLUMN_PERIODICITY + " TEXT, " +
+                COLUMN_TIME_START + " TEXT, " + COLUMN_TIME_FINISH + " TEXT, " + COLUMN_TAGS + " TEXT, " + COLUMN_TEXT_NOTE + " TEXT, " +
+                COLUMN_PIC_NOTE + " TEXT, " + COLUMN_AUDIO_NOTE + " TEXT);";
         db.execSQL(query);
     }
 
@@ -38,13 +47,23 @@ class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    void add(String name, String date, String tags){
+    void add(String name, String date, String day_of_week,
+             String periodicity, String time_start, String time_finish,
+             String tags, String text_note, String pic_note, String audio_note){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(COLUMN_NAME, name);
         cv.put(COLUMN_DATE, date);
+        cv.put(COLUMN_DAY_OF_WEEK, day_of_week);
+        cv.put(COLUMN_PERIODICITY, periodicity);
+        cv.put(COLUMN_TIME_START, time_start);
+        cv.put(COLUMN_TIME_FINISH, time_finish);
         cv.put(COLUMN_TAGS, tags);
+        cv.put(COLUMN_TEXT_NOTE, text_note);
+        cv.put(COLUMN_PIC_NOTE, pic_note);
+        cv.put(COLUMN_AUDIO_NOTE, audio_note);
+
         long result = db.insert(TABLE_NAME, null, cv);
         if(result == -1)
         {
