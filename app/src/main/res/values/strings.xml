@@ -10,4 +10,5 @@
     <string name="theme_light">Light theme</string>
     <string name="theme_dark">Dark theme</string>
     <string name="theme_device">Device theme</string>
+    <string name="add_button">Add</string>
 </resources>
