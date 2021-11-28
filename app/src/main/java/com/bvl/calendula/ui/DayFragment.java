@@ -17,13 +17,14 @@ import com.bvl.calendula.AddActivity;
 import com.bvl.calendula.DatabaseHelper;
 import com.bvl.calendula.ElementAdapter;
 import com.bvl.calendula.R;
+import com.bvl.calendula.ScrollAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 public class DayFragment extends Fragment {
 
-    RecyclerView recyclerView;
+    RecyclerView recyclerView, scroll;
     FloatingActionButton button;
 
     DatabaseHelper db_helper;
@@ -38,6 +39,10 @@ public class DayFragment extends Fragment {
 
         recyclerView = v.findViewById(R.id.recycler);
         button = v.findViewById(R.id.add_button);
+        scroll = v.findViewById(R.id.scroll);
+        scroll.setLayoutManager(new LinearLayoutManager(DayFragment.this.getActivity(), RecyclerView.HORIZONTAL, false));
+        scroll.setAdapter(new ScrollAdapter());
+        scroll.getLayoutManager().scrollToPosition(Integer.MAX_VALUE / 2);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
