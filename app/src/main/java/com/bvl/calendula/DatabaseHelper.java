@@ -9,6 +9,9 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private Context context;
@@ -77,8 +80,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor read(){
-        String query = "SELECT * FROM " + TABLE_NAME;
+    public Cursor read(Date date){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String fDate = sdf.format(date);
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_DATE + " = '" + fDate + "'";
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;

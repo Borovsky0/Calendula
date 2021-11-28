@@ -21,6 +21,7 @@ import com.bvl.calendula.ScrollAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DayFragment extends Fragment {
 
@@ -31,6 +32,13 @@ public class DayFragment extends Fragment {
     ArrayList<String> id, name, date, day_of_week, periodicity, time_start, time_finish, tags, text_note, pic_note, audio_note;
 
     ElementAdapter adapter;
+
+    Date cDate = null;
+
+    public DayFragment(Date newDate)
+    {
+        this.cDate = newDate;
+    }
 
     @Nullable
     @Override
@@ -77,7 +85,7 @@ public class DayFragment extends Fragment {
     }
 
     void toArrays(){
-        Cursor cursor = db_helper.read();
+        Cursor cursor = db_helper.read(cDate);
         if(cursor.getCount() != 0)
         {
             while(cursor.moveToNext())
