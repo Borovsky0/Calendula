@@ -42,9 +42,11 @@ public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.ID_txt.setText(String.valueOf(id.get(position)));
-        holder.Name_txt.setText(String.valueOf(name.get(position)));
-        holder.Date_txt.setText(String.valueOf(date.get(position)));
+        String tmpText = String.valueOf(time_finish.get(position)).equals("NULL") ? String.valueOf(time_start.get(position))
+                : String.valueOf(time_start.get(position)) + " - " + String.valueOf(time_finish.get(position));
+        holder.nameTxt.setText(String.valueOf(name.get(position)));
+        holder.time.setText(tmpText);
+        holder.tag.setText(String.valueOf(tags.get(position)));
     }
 
     @Override
@@ -54,13 +56,15 @@ public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView ID_txt, Name_txt, Date_txt;
+        TextView nameTxt, time, tag;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            ID_txt = itemView.findViewById(R.id.textID);
-            Name_txt = itemView.findViewById(R.id.textName);
-            Date_txt = itemView.findViewById(R.id.textDate);
+            nameTxt = itemView.findViewById(R.id.name);
+            time = itemView.findViewById(R.id.time);
+            tag = itemView.findViewById(R.id.tag);
+
+            nameTxt.setSelected(true);
         }
     }
 }

@@ -23,13 +23,15 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
         return new ViewHolder(rowItem);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    //@RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(ScrollAdapter.ViewHolder holder, int position) {
-        int dif = Integer.MAX_VALUE/2 - position;
-        LocalDate date = LocalDate.now().minusDays(dif);
-        holder.datetext.setText(Integer.toString(date.getDayOfMonth()));
-        holder.monthtext.setText(date.getMonth().toString() + Integer.toString(date.getYear()));
+        //int dif = Integer.MAX_VALUE/2 - position;
+        //LocalDate date = LocalDate.now().minusDays(dif);
+        //holder.datetext.setText(Integer.toString(date.getDayOfMonth()));
+        //holder.monthtext.setText(date.getMonth().toString() + Integer.toString(date.getYear()));
+        holder.datetext.setText(Integer.toString(position));
+        holder.monthtext.setText(Integer.toString(position));
     }
 
     @Override
