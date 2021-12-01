@@ -81,7 +81,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Cursor read(Date date){
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         String fDate = sdf.format(date);
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_DATE + " = '" + fDate + "'";
         SQLiteDatabase db = this.getReadableDatabase();

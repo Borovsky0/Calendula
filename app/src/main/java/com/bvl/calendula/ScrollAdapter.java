@@ -1,18 +1,26 @@
 package com.bvl.calendula;
 
-import android.os.Build;
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Color;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.time.LocalDate;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder> {
+
+    Context context;
+    int centerPos = Integer.MAX_VALUE / 2;
+    int row_index = centerPos;
     private OnDateClickListener onDateClickListener;
     
     public ScrollAdapter(OnDateClickListener onDateClickListener){
@@ -22,18 +30,38 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
     @Override
     public ScrollAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View rowItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.element_scroll, parent, false);
+        context = parent.getContext();
         return new ViewHolder(rowItem, onDateClickListener);
     }
 
-    //@RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(ScrollAdapter.ViewHolder holder, int position) {
-        //int dif = Integer.MAX_VALUE/2 - position;
-        //LocalDate date = LocalDate.now().minusDays(dif);
-        //holder.datetext.setText(Integer.toString(date.getDayOfMonth()));
-        //holder.monthtext.setText(date.getMonth().toString() + Integer.toString(date.getYear()));
-        holder.datetext.setText(Integer.toString(position));
-        holder.monthtext.setText(Integer.toString(position));
+        int dif = centerPos - position; //day difference
+        Calendar calendar = Calendar.getInstance(); //get today date
+        calendar.add(Calendar.DATE, -dif);
+        holder.dateText.setText(Integer.toString(calendar.get(Calendar.DAY_OF_MONTH)));
+        holder.monthText.setText(new SimpleDateFormat("MMM").format(calendar.getTime()));
+
+        TypedValue value = new TypedValue(); //get color from attr
+        context.getTheme().resolveAttribute(R.attr.colorPrimary, value, true);
+        int colorPrimary = value.data;
+        context.getTheme().resolveAttribute(R.attr.colorOnBackground, value, true);
+        int colorOnBackground = value.data;
+
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onDateClickListener.onDateClick(holder.getAdapterPosition());
+                row_index=holder.getAdapterPosition();
+                notifyDataSetChanged();
+            }
+        });
+
+        if (row_index==holder.getAdapterPosition()) {
+            holder.cardView.setCardBackgroundColor(colorPrimary);
+        } else {
+            holder.cardView.setCardBackgroundColor(colorOnBackground);
+        }
     }
 
     @Override
@@ -41,28 +69,26 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
         return Integer.MAX_VALUE;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView datetext;
-        private TextView monthtext;
-        
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private TextView dateText;
+        private TextView monthText;
+        private LinearLayout linearLayout;
+        private CardView cardView;
+
+        int row_index = -1;
+
         private OnDateClickListener onDateClickListener;
         
         public ViewHolder(View view, OnDateClickListener onDateClickListener) {
             super(view);
-            view.setOnClickListener(this);
-            this.datetext = view.findViewById(R.id.date);
-            this.monthtext = view.findViewById(R.id.month);
+            this.dateText = view.findViewById(R.id.date);
+            this.monthText = view.findViewById(R.id.month);
+            this.linearLayout = view.findViewById(R.id.linear);
+            this.cardView = view.findViewById(R.id.card);
             this.onDateClickListener = onDateClickListener;
         }
-
-        @Override
-        public void onClick(View view) {
-            Toast.makeText(view.getContext(), "position : " + getLayoutPosition() + " text : " +
-                    this.datetext.getText() + " month: " + this.monthtext.getText(), Toast.LENGTH_SHORT).show();
-            onDateClickListener.onDateClick(getAdapterPosition());
-        }
     }
-    
+
     public interface OnDateClickListener {
         void onDateClick(int position);
     }

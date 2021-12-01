@@ -29,6 +29,8 @@ public class AddActivity extends BottomSheetDialogFragment {
 
     EditText name, day_of_week, periodicity, tags, text_note, pic_note, audio_note;
     TextView date, time;
+    Button button;
+    String dateData;
 
     @Nullable
     @Override
@@ -39,6 +41,7 @@ public class AddActivity extends BottomSheetDialogFragment {
         date = view.findViewById(R.id.editDate);
         time = view.findViewById(R.id.editTime);
         text_note = view.findViewById(R.id.editTextNote);
+        button = view.findViewById(R.id.button);
 
         name.requestFocus();
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -52,6 +55,7 @@ public class AddActivity extends BottomSheetDialogFragment {
         int minute = calendar.get(Calendar.MINUTE);
 
         date.setText(new SimpleDateFormat("d MMMM y").format(calendar.getTime()));
+        dateData = new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime());
 
         date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +65,7 @@ public class AddActivity extends BottomSheetDialogFragment {
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         calendar.set(year, month, day);
                         date.setText(new SimpleDateFormat("d MMMM y").format(calendar.getTime()));
+                        dateData = new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime());
                     }
                 }, year, month, day);
                 datePickerDialog.show();
@@ -82,6 +87,23 @@ public class AddActivity extends BottomSheetDialogFragment {
                     }
                 }, hour, minute, true);
                 timePickerDialog.show();
+            }
+        });
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatabaseHelper db_helper = new DatabaseHelper(getContext());
+                db_helper.add(name.getText().toString(),
+                        dateData,
+                        "N",
+                        "N",
+                        time.getText().toString(),
+                        "N",
+                        "N",
+                        text_note.getText().toString(),
+                        "N",
+                        "N");
             }
         });
         return view;
