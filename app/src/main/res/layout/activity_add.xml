@@ -1,118 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddActivity">
-
-    <Button
-        android:id="@+id/save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add"
-        app:layout_constraintStart_toStartOf="@+id/editAudioNote"
-        app:layout_constraintTop_toBottomOf="@+id/editAudioNote" />
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/editName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="@string/todo"
+        android:singleLine="true"
+        android:maxLength="100"
+        android:textColor="@color/black_secondary"
+        android:textCursorDrawable="@drawable/color_cursor"
+        android:background="@android:color/transparent"
+        android:textSize="20dp"/>
 
-    <EditText
+    <TextView
         android:id="@+id/editDate"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Date"
-        app:layout_constraintStart_toStartOf="@+id/editName"
-        app:layout_constraintTop_toBottomOf="@+id/editName" />
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black_secondary"
+        android:textSize="14dp"/>
 
-    <EditText
-        android:id="@+id/editDay"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/editTime"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Day"
-        app:layout_constraintStart_toStartOf="@+id/editDate"
-        app:layout_constraintTop_toBottomOf="@+id/editDate" />
-
-    <EditText
-        android:id="@+id/editPeriodicity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Periodicity"
-        app:layout_constraintStart_toStartOf="@+id/editDay"
-        app:layout_constraintTop_toBottomOf="@+id/editDay" />
-
-    <EditText
-        android:id="@+id/editTimeStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="TimeStart"
-        app:layout_constraintStart_toStartOf="@+id/editPeriodicity"
-        app:layout_constraintTop_toBottomOf="@+id/editPeriodicity" />
-
-    <EditText
-        android:id="@+id/editTimeFinish"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="TimeFinish"
-        app:layout_constraintStart_toStartOf="@+id/editTimeStart"
-        app:layout_constraintTop_toBottomOf="@+id/editTimeStart" />
-
-    <EditText
-        android:id="@+id/editTags"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Tags"
-        app:layout_constraintStart_toStartOf="@+id/editTimeFinish"
-        app:layout_constraintTop_toBottomOf="@+id/editTimeFinish" />
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black_secondary"
+        android:textSize="14dp"/>
 
     <EditText
         android:id="@+id/editTextNote"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="TextNote"
-        app:layout_constraintStart_toStartOf="@+id/editTags"
-        app:layout_constraintTop_toBottomOf="@+id/editTags" />
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="20dp"
+        android:maxLength="100"
+        android:hint="@string/text_note"
+        android:textColor="@color/black_secondary"
+        android:textSize="14dp"
+        android:textCursorDrawable="@drawable/color_cursor"
+        android:background="@android:color/transparent"/>
 
-    <EditText
-        android:id="@+id/editPicNote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="PicNote"
-        app:layout_constraintStart_toStartOf="@+id/editTextNote"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNote" />
 
-    <EditText
-        android:id="@+id/editAudioNote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintStart_toStartOf="@+id/editPicNote"
-        app:layout_constraintTop_toBottomOf="@+id/editPicNote" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

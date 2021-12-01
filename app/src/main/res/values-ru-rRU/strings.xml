@@ -11,4 +11,6 @@
     <string name="theme_dark">Тёмная тема</string>
     <string name="theme_device">Тема устройства</string>
     <string name="add_button">Добавить</string>
+    <string name="todo">Нужно сделать...</string>
+    <string name="text_note">Описание...</string>
 </resources>

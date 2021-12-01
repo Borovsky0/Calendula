@@ -3,9 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/color_cursor.xml" value="0.2703125" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/color_selector.xml" value="0.2703125" />
+        <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/ic_add.xml" value="0.2703125" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/ic_day.xml" value="0.2703125" />
+        <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/ic_month.xml" value="0.2703125" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/rounded_corner.xml" value="0.2703125" />
+        <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/rounded_sheet.xml" value="0.2703125" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/selector.xml" value="0.2703125" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/layout/activity_add.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/layout/activity_main.xml" value="0.1" />

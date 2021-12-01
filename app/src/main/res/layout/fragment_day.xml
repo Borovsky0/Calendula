@@ -26,10 +26,10 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="12dp"
+        android:backgroundTint="?attr/colorAccent"
         android:clickable="true"
         android:contentDescription="@string/add_button"
         android:focusable="true"
-        android:backgroundTint="?attr/colorAccent"
         app:borderWidth="0dp"
         app:srcCompat="@drawable/ic_add" />
 </RelativeLayout>

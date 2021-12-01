@@ -55,8 +55,8 @@ public class DayFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(DayFragment.this.getActivity(), AddActivity.class);
-                startActivity(intent);
+                AddActivity addActivity = new AddActivity();
+                addActivity.show(getActivity().getSupportFragmentManager(), "TAG");
             }
         });
 

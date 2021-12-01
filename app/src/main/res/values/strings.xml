@@ -11,4 +11,6 @@
     <string name="theme_dark">Dark theme</string>
     <string name="theme_device">Device theme</string>
     <string name="add_button">Add</string>
+    <string name="todo">Need to do...</string>
+    <string name="text_note">Description...</string>
 </resources>
