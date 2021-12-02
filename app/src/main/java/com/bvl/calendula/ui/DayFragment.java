@@ -1,6 +1,5 @@
 package com.bvl.calendula.ui;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,17 +18,15 @@ import com.bvl.calendula.DatabaseHelper;
 import com.bvl.calendula.ElementAdapter;
 import com.bvl.calendula.R;
 import com.bvl.calendula.ScrollAdapter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickListener {
 
     RecyclerView recyclerView, scroll;
-    FloatingActionButton button;
+    CardView cardViewButton;
 
     DatabaseHelper db_helper;
     ArrayList<String> id, name, date, day_of_week, periodicity, time_start, time_finish, tags, text_note, pic_note, audio_note;
@@ -48,13 +46,13 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         View v = inflater.inflate(R.layout.fragment_day, container, false);
 
         recyclerView = v.findViewById(R.id.recycler);
-        button = v.findViewById(R.id.add_button);
+        cardViewButton = v.findViewById(R.id.add_button);
         scroll = v.findViewById(R.id.scroll);
         scroll.setLayoutManager(new LinearLayoutManager(DayFragment.this.getActivity(), RecyclerView.HORIZONTAL, false));
         scroll.setAdapter(new ScrollAdapter(this));
         scroll.getLayoutManager().scrollToPosition(Integer.MAX_VALUE / 2);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        cardViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AddActivity addActivity = new AddActivity();
@@ -121,7 +119,6 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         this.pic_note.clear();
         this.audio_note.clear();
         int dif = Integer.MAX_VALUE / 2 - position;
-        //Calendar date = new GregorianCalendar(2021, 11, 3);
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, -dif);
         toArrays(calendar.getTime());

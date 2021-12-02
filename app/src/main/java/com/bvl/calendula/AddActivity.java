@@ -27,7 +27,7 @@ import java.util.TimeZone;
 
 public class AddActivity extends BottomSheetDialogFragment {
 
-    EditText name, day_of_week, periodicity, tags, text_note, pic_note, audio_note;
+    EditText name, text_note;
     TextView date, time;
     Button button;
     String dateData;
@@ -44,8 +44,6 @@ public class AddActivity extends BottomSheetDialogFragment {
         button = view.findViewById(R.id.button);
 
         name.requestFocus();
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -104,6 +102,7 @@ public class AddActivity extends BottomSheetDialogFragment {
                         text_note.getText().toString(),
                         "N",
                         "N");
+                dismiss();
             }
         });
         return view;

@@ -1,8 +1,6 @@
 package com.bvl.calendula;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,8 +44,8 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
         TypedValue value = new TypedValue(); //get color from attr
         context.getTheme().resolveAttribute(R.attr.colorPrimary, value, true);
         int colorPrimary = value.data;
-        context.getTheme().resolveAttribute(R.attr.colorOnBackground, value, true);
-        int colorOnBackground = value.data;
+        context.getTheme().resolveAttribute(R.attr.colorAccent, value, true);
+        @ColorInt int colorOnBackground = value.data;
 
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,8 +73,6 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
         private TextView monthText;
         private LinearLayout linearLayout;
         private CardView cardView;
-
-        int row_index = -1;
 
         private OnDateClickListener onDateClickListener;
         

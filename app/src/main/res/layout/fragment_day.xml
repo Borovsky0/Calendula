@@ -4,32 +4,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/scroll"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewScroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="?attr/colorOnBackground"/>
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/add_button"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="6dp"
+        android:background="?attr/colorAccent"
+        app:cardBackgroundColor="?attr/colorAccent"
+        app:cardCornerRadius="16dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="?attr/colorAccent" />
+
+    </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/scroll"
-        android:background="?attr/colorOnBackground" />
+        android:layout_above="@+id/cardViewScroll"
+        android:background="?attr/colorOnBackground"
+        android:requiresFadingEdge="vertical"
+        android:fadingEdgeLength="40dp"
+        android:overScrollMode="never"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/add_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="12dp"
-        android:layout_marginBottom="12dp"
-        android:backgroundTint="?attr/colorAccent"
-        android:clickable="true"
-        android:contentDescription="@string/add_button"
-        android:focusable="true"
-        app:borderWidth="0dp"
-        app:srcCompat="@drawable/ic_add" />
+        android:layout_marginBottom="6dp"
+        android:layout_marginTop="6dp"
+        android:layout_below="@id/recycler"
+        app:cardBackgroundColor="?attr/colorAccent"
+        app:cardCornerRadius="16dp">
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_add"
+            android:layout_gravity="center"
+            app:tint="?attr/colorPrimary" />
+
+
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>
