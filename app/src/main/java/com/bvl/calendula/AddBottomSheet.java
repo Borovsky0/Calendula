@@ -1,15 +1,11 @@
 package com.bvl.calendula;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -25,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-public class AddActivity extends BottomSheetDialogFragment {
+public class AddBottomSheet extends BottomSheetDialogFragment {
 
     EditText name, text_note;
     TextView date, time;
@@ -35,7 +31,7 @@ public class AddActivity extends BottomSheetDialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_add, container, false);
+        View view = inflater.inflate(R.layout.bottom_sheet_add, container, false);
 
         name = view.findViewById(R.id.editName);
         date = view.findViewById(R.id.editDate);

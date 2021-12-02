@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bvl.calendula.AddActivity;
+import com.bvl.calendula.AddBottomSheet;
 import com.bvl.calendula.DatabaseHelper;
 import com.bvl.calendula.ElementAdapter;
 import com.bvl.calendula.R;
@@ -55,8 +55,8 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         cardViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddActivity addActivity = new AddActivity();
-                addActivity.show(getActivity().getSupportFragmentManager(), "TAG");
+                AddBottomSheet addBottomSheet = new AddBottomSheet();
+                addBottomSheet.show(getActivity().getSupportFragmentManager(), "TAG");
             }
         });
 

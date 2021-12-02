@@ -22,7 +22,7 @@
         app:menu="@menu/navigation_menu"
         app:elevation="0dp"
         app:itemRippleColor="@android:color/transparent"
-        app:itemTextColor="@drawable/color_selector"
-        app:itemIconTint="@drawable/color_selector"/>
+        app:itemTextColor="@drawable/color_selector_icon"
+        app:itemIconTint="@drawable/color_selector_icon"/>
 
 </RelativeLayout>
