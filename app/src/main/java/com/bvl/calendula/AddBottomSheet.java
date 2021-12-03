@@ -26,8 +26,11 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
 
     EditText name, date, time, repeat, text_note;
     Button button;
-    String dataDate, dataRepeat;
+
+    Calendar calendar;
+    String dataDate;
     String [] repeatList;
+    int dataDayRepeat = 0, dataWeekRepeat = 0;
 
     @Nullable
     @Override
@@ -43,10 +46,10 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
 
         //name.requestFocus();
 
-        Calendar calendar = Calendar.getInstance();
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH);
+        calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
 
@@ -90,23 +93,22 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
 
         repeat.setOnClickListener(new View.OnClickListener() {
 
-            int item = 0;
-
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.CustomAlertDialogTheme);
                 builder.setTitle(getString(R.string.repeat));
-                builder.setSingleChoiceItems(repeatList, item, new DialogInterface.OnClickListener() {
+                builder.setSingleChoiceItems(repeatList, dataWeekRepeat, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        item = i;
+                        dataWeekRepeat = i;
                     }
                 });
 
                 builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        repeat.setText(repeatList[item]);
+                        dataDayRepeat = calendar.get(Calendar.DAY_OF_WEEK);
+                        repeat.setText(repeatList[dataWeekRepeat]);
                         dialogInterface.dismiss();
                     }
                 });
@@ -122,17 +124,19 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 DatabaseHelper db_helper = new DatabaseHelper(getContext());
-                db_helper.add(name.getText().toString(),
+                db_helper.add(
+                        name.getText().toString(),
                         dataDate,
-                        "N",
-                        "N",
+                        dataWeekRepeat == 0 ? "NULL" : Integer.toString(dataDayRepeat),
+                        dataWeekRepeat == 0 ? "NULL" : Integer.toString(dataWeekRepeat-1),
                         time.getText().toString(),
-                        "N",
-                        "N",
+                        "NULL",
+                        "NULL",
                         text_note.getText().toString(),
-                        "N",
-                        "N");
+                        "NULL",
+                        "NULL");
                 dismiss();
             }
         });

@@ -14,17 +14,17 @@ import java.util.ArrayList;
 public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ViewHolder> {
 
     Context context;
-    ArrayList id, name, date, day_of_week, periodicity, time_start, time_finish, tags, text_note, pic_note, audio_note;
+    ArrayList id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note;
 
-    public ElementAdapter(Context context, ArrayList id, ArrayList name, ArrayList date, ArrayList day_of_week,
-                          ArrayList periodicity, ArrayList time_start, ArrayList time_finish,
+    public ElementAdapter(Context context, ArrayList id, ArrayList name, ArrayList date, ArrayList day_repeat,
+                          ArrayList week_repeat, ArrayList time_start, ArrayList time_finish,
                           ArrayList tags, ArrayList text_note, ArrayList pic_note, ArrayList audio_note){
         this.context = context;
         this.id = id;
         this.name = name;
         this.date = date;
-        this.day_of_week = day_of_week;
-        this.periodicity = periodicity;
+        this.day_repeat = day_repeat;
+        this.week_repeat = week_repeat;
         this.time_start = time_start;
         this.time_finish = time_finish;
         this.tags = tags;

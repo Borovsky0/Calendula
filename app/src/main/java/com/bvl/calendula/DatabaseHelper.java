@@ -22,8 +22,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_NAME = "name";
     private static final String COLUMN_DATE = "date";
-    private static final String COLUMN_DAY_OF_WEEK = "day_of_week";
-    private static final String COLUMN_PERIODICITY = "periodicity";
+    private static final String COLUMN_DAY_REPEAT = "day_repeat";
+    private static final String COLUMN_WEEK_REPEAT = "week_repeat";
     private static final String COLUMN_TIME_START = "time_start";
     private static final String COLUMN_TIME_FINISH = "time_finish";
     private static final String COLUMN_TAGS = "tags";
@@ -39,7 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE " + TABLE_NAME + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_NAME + " TEXT, " + COLUMN_DATE + " TEXT, " + COLUMN_DAY_OF_WEEK + " TEXT, " + COLUMN_PERIODICITY + " TEXT, " +
+                COLUMN_NAME + " TEXT, " + COLUMN_DATE + " TEXT, " + COLUMN_DAY_REPEAT + " TEXT, " + COLUMN_WEEK_REPEAT + " TEXT, " +
                 COLUMN_TIME_START + " TEXT, " + COLUMN_TIME_FINISH + " TEXT, " + COLUMN_TAGS + " TEXT, " + COLUMN_TEXT_NOTE + " TEXT, " +
                 COLUMN_PIC_NOTE + " TEXT, " + COLUMN_AUDIO_NOTE + " TEXT);";
         db.execSQL(query);
@@ -60,8 +60,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         cv.put(COLUMN_NAME, name);
         cv.put(COLUMN_DATE, date);
-        cv.put(COLUMN_DAY_OF_WEEK, day_of_week);
-        cv.put(COLUMN_PERIODICITY, periodicity);
+        cv.put(COLUMN_DAY_REPEAT, day_of_week);
+        cv.put(COLUMN_WEEK_REPEAT, periodicity);
         cv.put(COLUMN_TIME_START, time_start);
         cv.put(COLUMN_TIME_FINISH, time_finish);
         cv.put(COLUMN_TAGS, tags);

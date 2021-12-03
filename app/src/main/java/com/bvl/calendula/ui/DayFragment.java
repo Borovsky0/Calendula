@@ -29,7 +29,7 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
     CardView cardViewButton;
 
     DatabaseHelper db_helper;
-    ArrayList<String> id, name, date, day_of_week, periodicity, time_start, time_finish, tags, text_note, pic_note, audio_note;
+    ArrayList<String> id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note;
 
     ElementAdapter adapter;
 
@@ -64,8 +64,8 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         id = new ArrayList<>();
         name = new ArrayList<>();
         date = new ArrayList<>();
-        day_of_week = new ArrayList<>();
-        periodicity = new ArrayList<>();
+        day_repeat = new ArrayList<>();
+        week_repeat = new ArrayList<>();
         time_start = new ArrayList<>();
         time_finish = new ArrayList<>();
         tags = new ArrayList<>();
@@ -76,7 +76,7 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         toArrays(cDate);
 
         adapter = new ElementAdapter(DayFragment.this.getActivity(),
-                id, name, date, day_of_week, periodicity, time_start,
+                id, name, date, day_repeat, week_repeat, time_start,
                 time_finish, tags, text_note, pic_note, audio_note);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(DayFragment.this.getActivity()));
@@ -93,8 +93,8 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
                 this.id.add(cursor.getString(0));
                 this.name.add(cursor.getString(1));
                 this.date.add(cursor.getString(2));
-                this.day_of_week.add(cursor.getString(3));
-                this.periodicity.add(cursor.getString(4));
+                this.day_repeat.add(cursor.getString(3));
+                this.week_repeat.add(cursor.getString(4));
                 this.time_start.add(cursor.getString(5));
                 this.time_finish.add(cursor.getString(6));
                 this.tags.add(cursor.getString(7));
@@ -110,8 +110,8 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         this.id.clear();
         this.name.clear();
         this.date.clear();
-        this.day_of_week.clear();
-        this.periodicity.clear();
+        this.day_repeat.clear();
+        this.week_repeat.clear();
         this.time_start.clear();
         this.time_finish.clear();
         this.tags.clear();
