@@ -13,4 +13,11 @@
     <string name="add_button">Add</string>
     <string name="todo">Need to do...</string>
     <string name="text_note">Description...</string>
+    <string name="once">Once</string>
+    <string name="weekly">Weekly</string>
+    <string name="on_even_weeks">On even weeks</string>
+    <string name="on_odd_weeks">On odd weeks</string>
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
+    <string name="repeat">Repeat</string>
 </resources>

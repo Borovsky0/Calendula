@@ -62,7 +62,7 @@ public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ViewHold
             super(itemView);
             nameTxt = itemView.findViewById(R.id.name);
             time = itemView.findViewById(R.id.time);
-            tag = itemView.findViewById(R.id.tag);
+            tag = itemView.findViewById(R.id.editDayOfWeek);
 
             nameTxt.setSelected(true);
         }

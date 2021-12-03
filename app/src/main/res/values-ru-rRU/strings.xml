@@ -13,4 +13,11 @@
     <string name="add_button">Добавить</string>
     <string name="todo">Нужно сделать...</string>
     <string name="text_note">Описание...</string>
+    <string name="once">Однократно</string>
+    <string name="weekly">Еженедельно</string>
+    <string name="on_even_weeks">По чётным неделям</string>
+    <string name="on_odd_weeks">По нечётным неделям</string>
+    <string name="ok">ОК</string>
+    <string name="cancel">ОТМЕНА</string>
+    <string name="repeat">Повторять</string>
 </resources>

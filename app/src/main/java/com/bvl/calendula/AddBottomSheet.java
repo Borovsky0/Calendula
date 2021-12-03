@@ -1,7 +1,9 @@
 package com.bvl.calendula;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
@@ -23,10 +24,10 @@ import java.util.TimeZone;
 
 public class AddBottomSheet extends BottomSheetDialogFragment {
 
-    EditText name, text_note;
-    TextView date, time;
+    EditText name, date, time, repeat, text_note;
     Button button;
-    String dateData;
+    String dataDate, dataRepeat;
+    String [] repeatList;
 
     @Nullable
     @Override
@@ -36,10 +37,11 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
         name = view.findViewById(R.id.editName);
         date = view.findViewById(R.id.editDate);
         time = view.findViewById(R.id.editTime);
+        repeat = view.findViewById(R.id.editRepeat);
         text_note = view.findViewById(R.id.editTextNote);
         button = view.findViewById(R.id.button);
 
-        name.requestFocus();
+        //name.requestFocus();
 
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -49,29 +51,27 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
         int minute = calendar.get(Calendar.MINUTE);
 
         date.setText(new SimpleDateFormat("d MMMM y").format(calendar.getTime()));
-        dateData = new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime());
+        dataDate = new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime());
 
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), R.style.CustomDatePickerTheme, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         calendar.set(year, month, day);
                         date.setText(new SimpleDateFormat("d MMMM y").format(calendar.getTime()));
-                        dateData = new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime());
+                        dataDate = new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime());
                     }
                 }, year, month, day);
                 datePickerDialog.show();
             }
         });
 
-        time.setText(new SimpleDateFormat("H:mm").format(calendar.getTime()));
-
         time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), R.style.CustomTimePickerTheme, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hour, int minute) {
                         calendar.set(Calendar.HOUR_OF_DAY, hour);
@@ -80,16 +80,51 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
                         time.setText(new SimpleDateFormat("H:mm").format(calendar.getTime()));
                     }
                 }, hour, minute, true);
+                //timePickerDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_MASK_STATE);
                 timePickerDialog.show();
             }
         });
+
+        repeatList = new String[]{getString(R.string.once), getString(R.string.weekly),
+                getString(R.string.on_odd_weeks), getString(R.string.on_even_weeks)};
+
+        repeat.setOnClickListener(new View.OnClickListener() {
+
+            int item = 0;
+
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.CustomAlertDialogTheme);
+                builder.setTitle(getString(R.string.repeat));
+                builder.setSingleChoiceItems(repeatList, item, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        item = i;
+                    }
+                });
+
+                builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        repeat.setText(repeatList[item]);
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                builder.setNegativeButton(getString(R.string.cancel), null);
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DatabaseHelper db_helper = new DatabaseHelper(getContext());
                 db_helper.add(name.getText().toString(),
-                        dateData,
+                        dataDate,
                         "N",
                         "N",
                         time.getText().toString(),
@@ -101,6 +136,7 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
                 dismiss();
             }
         });
+
         return view;
     }
 

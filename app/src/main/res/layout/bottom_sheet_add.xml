@@ -11,54 +11,87 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:backgroundTint="?attr/colorSecondary"
+        android:drawableEnd="@drawable/ic_name"
+        android:drawableTint="?attr/colorSecondary"
         android:hint="@string/todo"
-        android:singleLine="true"
         android:maxLength="100"
-        android:textColor="@color/black_secondary"
+        android:singleLine="true"
+        android:textColor="?attr/colorSecondary"
         android:textCursorDrawable="@drawable/color_selector_cursor"
-        android:background="@android:color/transparent"
-        android:textSize="20dp"/>
+        android:textSize="16sp" />
 
-    <TextView
+    <EditText
         android:id="@+id/editDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
-        android:textColor="@color/black_secondary"
-        android:textSize="14dp"/>
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="?attr/colorSecondary"
+        android:clickable="true"
+        android:drawableEnd="@drawable/ic_date"
+        android:drawableTint="?attr/colorSecondary"
+        android:focusable="false"
+        android:inputType="date"
+        android:textColor="?attr/colorSecondary"
+        android:textSize="16sp" />
 
-    <TextView
+    <EditText
         android:id="@+id/editTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
-        android:textColor="@color/black_secondary"
-        android:textSize="14dp"/>
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="?attr/colorSecondary"
+        android:clickable="true"
+        android:drawableEnd="@drawable/ic_time"
+        android:drawableTint="?attr/colorSecondary"
+        android:focusable="false"
+        android:inputType="date"
+        android:text="--:--"
+        android:textColor="?attr/colorSecondary"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/editRepeat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="?attr/colorSecondary"
+        android:clickable="true"
+        android:drawableEnd="@drawable/ic_repeat"
+        android:drawableTint="?attr/colorSecondary"
+        android:focusable="false"
+        android:inputType="none"
+        android:textColor="?attr/colorSecondary"
+        android:textSize="16sp"
+        android:text="@string/once"/>
 
     <EditText
         android:id="@+id/editTextNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="20dp"
-        android:maxLength="100"
+        android:backgroundTint="?attr/colorSecondary"
+        android:drawableEnd="@drawable/ic_text_note"
+        android:drawableTint="?attr/colorSecondary"
         android:hint="@string/text_note"
-        android:textColor="@color/black_secondary"
-        android:textSize="14dp"
+        android:maxLength="100"
+        android:textColor="?attr/colorSecondary"
         android:textCursorDrawable="@drawable/color_selector_cursor"
-        android:background="@android:color/transparent"/>
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Button" />
-
 
 </LinearLayout>
