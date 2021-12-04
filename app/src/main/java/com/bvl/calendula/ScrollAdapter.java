@@ -1,5 +1,7 @@
 package com.bvl.calendula;
 
+import static android.icu.lang.UCharacter.toUpperCase;
+
 import android.content.Context;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -8,12 +10,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.ColorInt;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder> {
 
@@ -21,14 +23,37 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
     int centerPos = Integer.MAX_VALUE / 2;
     int row_index = centerPos;
     private OnDateClickListener onDateClickListener;
-    
-    public ScrollAdapter(OnDateClickListener onDateClickListener){
+    String elementType;
+    String[] ruMonthNames = { "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" };
+    String[] ruMonthShortNames = { "янв", "фев", "мар", "апр", "мая", "июн", "июл", "авг", "сен", "окт", "ноя", "дек" };
+
+    public ScrollAdapter(OnDateClickListener onDateClickListener, String element){
         this.onDateClickListener = onDateClickListener;
+        this.elementType = element;
     }
 
     @Override
     public ScrollAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View rowItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.element_scroll, parent, false);
+
+        View rowItem;
+        switch (elementType)
+        {
+            case "DAY":
+                rowItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.element_scroll_day, parent, false);
+                break;
+
+            case "WEEK":
+                rowItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.element_scroll_week, parent, false);
+                break;
+
+            case "MONTH":
+                rowItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.element_scroll_month, parent, false);
+                break;
+
+            default:
+                rowItem = null;
+                break;
+        }
         context = parent.getContext();
         return new ViewHolder(rowItem, onDateClickListener);
     }
@@ -37,15 +62,50 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
     public void onBindViewHolder(ScrollAdapter.ViewHolder holder, int position) {
         int dif = centerPos - position; //day difference
         Calendar calendar = Calendar.getInstance(); //get today date
-        calendar.add(Calendar.DATE, -dif);
-        holder.dateText.setText(Integer.toString(calendar.get(Calendar.DAY_OF_MONTH)));
-        holder.monthText.setText(new SimpleDateFormat("MMM").format(calendar.getTime()));
 
         TypedValue value = new TypedValue(); //get color from attr
         context.getTheme().resolveAttribute(R.attr.colorPrimary, value, true);
         int colorPrimary = value.data;
         context.getTheme().resolveAttribute(R.attr.colorAccent, value, true);
-        @ColorInt int colorOnBackground = value.data;
+        int colorOnBackground = value.data;
+
+        switch (elementType)
+        {
+            case "DAY":
+                calendar.add(Calendar.DATE, -dif);
+                holder.dayOfWeekText.setText(new SimpleDateFormat("E").format(calendar.getTime()).toUpperCase());
+
+                if(Locale.getDefault().getLanguage() == "ru") {
+                    holder.dateText.setText(Integer.toString(calendar.get(Calendar.DAY_OF_MONTH)) + " " +
+                            ruMonthShortNames[calendar.get(Calendar.MONTH)]);
+                }
+                else {
+                    holder.dateText.setText(Integer.toString(calendar.get(Calendar.DAY_OF_MONTH)) + " " +
+                            new SimpleDateFormat("MMM").format(calendar.getTime()));
+                }
+                break;
+
+            case "WEEK":
+                calendar.add(Calendar.WEEK_OF_YEAR, -dif);
+                holder.weekText.setText(Integer.toString(calendar.get(Calendar.WEEK_OF_YEAR)));
+                break;
+
+            case "MONTH":
+                calendar.add(Calendar.MONTH, -dif);
+
+                if(Locale.getDefault().getLanguage() == "ru") {
+                    holder.monthText.setText(ruMonthNames[calendar.get(Calendar.MONTH)]);
+                }
+                else {
+                    holder.monthText.setText(new SimpleDateFormat("MMMM").format(calendar.getTime()));
+                }
+                holder.yearText.setText(new SimpleDateFormat("yyyy").format(calendar.getTime()));
+                break;
+
+            default:
+
+                break;
+        }
 
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,14 +123,23 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
         }
     }
 
+    public String upperCase(String data)
+    {
+        return data.substring(0, 1).toUpperCase() + data.substring(1).toLowerCase();
+    }
+
     @Override
     public int getItemCount() {
         return Integer.MAX_VALUE;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView dayOfWeekText;
         private TextView dateText;
+        private TextView weekText;
         private TextView monthText;
+        private TextView yearText;
         private LinearLayout linearLayout;
         private CardView cardView;
 
@@ -78,8 +147,11 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
         
         public ViewHolder(View view, OnDateClickListener onDateClickListener) {
             super(view);
+            this.dayOfWeekText = view.findViewById(R.id.dayOfWeek);
             this.dateText = view.findViewById(R.id.date);
+            this.weekText = view.findViewById(R.id.week);
             this.monthText = view.findViewById(R.id.month);
+            this.yearText = view.findViewById(R.id.year);
             this.linearLayout = view.findViewById(R.id.linear);
             this.cardView = view.findViewById(R.id.card);
             this.onDateClickListener = onDateClickListener;

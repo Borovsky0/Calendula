@@ -11,7 +11,7 @@
         android:iconTint="?attr/colorSecondary"
         android:title="@string/week"/>
     <item
-        android:id="@+id/month"
+        android:id="@+id/year"
         android:icon="@drawable/ic_month"
         android:iconTint="?attr/colorSecondary"
         android:title="@string/month"/>

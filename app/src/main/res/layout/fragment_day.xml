@@ -59,6 +59,5 @@
             android:layout_gravity="center"
             app:tint="?attr/colorPrimary" />
 
-
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

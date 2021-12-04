@@ -13,7 +13,6 @@ import com.bvl.calendula.ui.MonthFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.week:
                             selectedFragment = new WeekFragment();
                             break;
-                        case R.id.month:
+                        case R.id.year:
                             selectedFragment = new MonthFragment();
                             break;
                     }

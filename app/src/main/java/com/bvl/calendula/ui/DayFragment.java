@@ -48,7 +48,7 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         cardViewButton = v.findViewById(R.id.add_button);
         scroll = v.findViewById(R.id.scroll);
         scroll.setLayoutManager(new LinearLayoutManager(DayFragment.this.getActivity(), RecyclerView.HORIZONTAL, false));
-        scroll.setAdapter(new ScrollAdapter(this));
+        scroll.setAdapter(new ScrollAdapter(this, "DAY"));
         scroll.getLayoutManager().scrollToPosition(Integer.MAX_VALUE / 2);
 
         cardViewButton.setOnClickListener(new View.OnClickListener() {

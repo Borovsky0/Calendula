@@ -1,12 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/textMonth"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewScroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/add_button"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="6dp"
+        android:background="?attr/colorAccent"
+        app:cardBackgroundColor="?attr/colorAccent"
+        app:cardCornerRadius="16dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="?attr/colorAccent" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TableLayout
+        android:id="@+id/monthTable"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/cardViewScroll"
+        android:background="?attr/colorOnBackground"/>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/add_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/month" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginTop="6dp"
+        android:layout_below="@id/monthTable"
+        app:cardBackgroundColor="?attr/colorAccent"
+        app:cardCornerRadius="16dp">
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_add"
+            android:layout_gravity="center"
+            app:tint="?attr/colorPrimary" />
+
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>
