@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -30,6 +31,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_TEXT_NOTE = "text_note";
     private static final String COLUMN_PIC_NOTE = "pic_note";
     private static final String COLUMN_AUDIO_NOTE = "audio_note";
+
+    private static final String WEEKLY = "0";
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -80,10 +83,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor read(Date date){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-        String fDate = sdf.format(date);
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_DATE + " = '" + fDate + "'";
+    public Cursor read(Calendar date){
+        String fDate = new SimpleDateFormat("yyyy/MM/dd").format(date.getTime());
+        String dayRepeat = Integer.toString(date.get(Calendar.DAY_OF_WEEK));
+        String weekRepeat =  Integer.toString(date.get(Calendar.WEEK_OF_YEAR) % 2 == 0 ? 2 : 1);
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_DATE + " = '" + fDate + "' OR (" + COLUMN_DAY_REPEAT
+                + " = '" + dayRepeat + "' AND (" + COLUMN_WEEK_REPEAT + " = '" + weekRepeat + "' OR " + COLUMN_WEEK_REPEAT
+                + " = '" + WEEKLY + "')) ORDER BY " + COLUMN_TIME_START + " ASC";
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;

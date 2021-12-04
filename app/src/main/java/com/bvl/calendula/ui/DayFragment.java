@@ -30,12 +30,11 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
 
     DatabaseHelper db_helper;
     ArrayList<String> id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note;
-
     ElementAdapter adapter;
 
-    Date cDate = null;
+    Calendar cDate = null;
 
-    public DayFragment(Date newDate)
+    public DayFragment(Calendar newDate)
     {
         this.cDate = newDate;
     }
@@ -84,7 +83,7 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         return v;
     }
 
-    void toArrays(Date desiredDate){
+    void toArrays(Calendar desiredDate){
         Cursor cursor = db_helper.read(desiredDate);
         if(cursor.getCount() != 0)
         {
@@ -121,7 +120,7 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         int dif = Integer.MAX_VALUE / 2 - position;
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, -dif);
-        toArrays(calendar.getTime());
+        toArrays(calendar);
         adapter.notifyDataSetChanged();
     }
 }

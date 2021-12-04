@@ -32,6 +32,7 @@ public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ViewHold
         this.pic_note = pic_note;
         this.audio_note = audio_note;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

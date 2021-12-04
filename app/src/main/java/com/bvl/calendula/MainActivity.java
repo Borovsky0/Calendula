@@ -18,20 +18,18 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
 
     Fragment selectedFragment = null;
-    Date cDate;
     Calendar todayDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        cDate = Calendar.getInstance().getTime();
         todayDate = Calendar.getInstance();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(listener);
         if(selectedFragment == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DayFragment(cDate)).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DayFragment(todayDate)).commit();
         }
     }
 
@@ -43,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                     switch (item.getItemId())
                     {
                         case R.id.day:
-                            selectedFragment = new DayFragment(cDate);
+                            selectedFragment = new DayFragment(todayDate);
                             break;
                         case R.id.week:
                             selectedFragment = new WeekFragment();

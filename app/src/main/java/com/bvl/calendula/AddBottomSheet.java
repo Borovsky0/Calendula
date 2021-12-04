@@ -53,7 +53,7 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
 
-        date.setText(new SimpleDateFormat("d MMMM y").format(calendar.getTime()));
+        date.setText(new SimpleDateFormat("d MMMM y, EEEE").format(calendar.getTime()));
         dataDate = new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime());
 
         date.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +63,8 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         calendar.set(year, month, day);
-                        date.setText(new SimpleDateFormat("d MMMM y").format(calendar.getTime()));
+                        date.setText(dataWeekRepeat == 0? new SimpleDateFormat("d MMMM y, EEEE").format(calendar.getTime())
+                                : new SimpleDateFormat("EEEE").format(calendar.getTime()));
                         dataDate = new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime());
                     }
                 }, year, month, day);
@@ -109,6 +110,8 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dataDayRepeat = calendar.get(Calendar.DAY_OF_WEEK);
                         repeat.setText(repeatList[dataWeekRepeat]);
+                        date.setText(dataWeekRepeat == 0? new SimpleDateFormat("d MMMM y, EEEE").format(calendar.getTime())
+                                : new SimpleDateFormat("EEEE").format(calendar.getTime()));
                         dialogInterface.dismiss();
                     }
                 });
@@ -128,7 +131,7 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
                 DatabaseHelper db_helper = new DatabaseHelper(getContext());
                 db_helper.add(
                         name.getText().toString(),
-                        dataDate,
+                        dataWeekRepeat == 0 ? dataDate : "NULL",
                         dataWeekRepeat == 0 ? "NULL" : Integer.toString(dataDayRepeat),
                         dataWeekRepeat == 0 ? "NULL" : Integer.toString(dataWeekRepeat-1),
                         time.getText().toString(),
