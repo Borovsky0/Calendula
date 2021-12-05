@@ -11,14 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ViewHolder> {
+public class ElementAdapterDay extends RecyclerView.Adapter<ElementAdapterDay.ViewHolder> {
 
     Context context;
     ArrayList id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note;
 
-    public ElementAdapter(Context context, ArrayList id, ArrayList name, ArrayList date, ArrayList day_repeat,
-                          ArrayList week_repeat, ArrayList time_start, ArrayList time_finish,
-                          ArrayList tags, ArrayList text_note, ArrayList pic_note, ArrayList audio_note){
+    public ElementAdapterDay(Context context, ArrayList id, ArrayList name, ArrayList date, ArrayList day_repeat,
+                             ArrayList week_repeat, ArrayList time_start, ArrayList time_finish,
+                             ArrayList tags, ArrayList text_note, ArrayList pic_note, ArrayList audio_note){
         this.context = context;
         this.id = id;
         this.name = name;
@@ -43,10 +43,9 @@ public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String tmpText = String.valueOf(time_finish.get(position)).equals("NULL") ? String.valueOf(time_start.get(position))
-                : String.valueOf(time_start.get(position)) + " - " + String.valueOf(time_finish.get(position));
         holder.nameTxt.setText(String.valueOf(name.get(position)));
-        holder.time.setText(tmpText);
+        holder.time.setText(String.valueOf(time_finish.get(position)).equals("NULL") ? String.valueOf(time_start.get(position))
+                : String.valueOf(time_start.get(position)) + " - " + String.valueOf(time_finish.get(position)));
         holder.tag.setText(String.valueOf(tags.get(position)));
     }
 

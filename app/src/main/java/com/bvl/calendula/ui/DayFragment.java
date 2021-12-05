@@ -15,13 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bvl.calendula.AddBottomSheet;
 import com.bvl.calendula.DatabaseHelper;
-import com.bvl.calendula.ElementAdapter;
+import com.bvl.calendula.ElementAdapterDay;
 import com.bvl.calendula.R;
 import com.bvl.calendula.ScrollAdapter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickListener {
 
@@ -30,7 +29,7 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
 
     DatabaseHelper db_helper;
     ArrayList<String> id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note;
-    ElementAdapter adapter;
+    ElementAdapterDay adapter;
 
     Calendar cDate = null;
 
@@ -74,7 +73,7 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
 
         toArrays(cDate);
 
-        adapter = new ElementAdapter(DayFragment.this.getActivity(),
+        adapter = new ElementAdapterDay(DayFragment.this.getActivity(),
                 id, name, date, day_repeat, week_repeat, time_start,
                 time_finish, tags, text_note, pic_note, audio_note);
         recyclerView.setAdapter(adapter);

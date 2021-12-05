@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new WeekFragment();
                             break;
                         case R.id.year:
-                            selectedFragment = new MonthFragment();
+                            selectedFragment = new MonthFragment(todayDate);
                             break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();

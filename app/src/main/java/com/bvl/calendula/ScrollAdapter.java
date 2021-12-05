@@ -123,11 +123,6 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
         }
     }
 
-    public String upperCase(String data)
-    {
-        return data.substring(0, 1).toUpperCase() + data.substring(1).toLowerCase();
-    }
-
     @Override
     public int getItemCount() {
         return Integer.MAX_VALUE;

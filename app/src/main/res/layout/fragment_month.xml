@@ -28,13 +28,12 @@
 
     </androidx.cardview.widget.CardView>
 
-    <TableLayout
+    <GridView
         android:id="@+id/monthTable"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/cardViewScroll"
-        android:background="?attr/colorOnBackground"/>
-
+        android:numColumns="8"
+        android:layout_above="@+id/cardViewScroll" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/add_button"
