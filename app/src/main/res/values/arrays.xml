@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="repeat">
+        <item>@string/once</item>
+        <item>@string/weekly</item>
+        <item>@string/on_odd_weeks</item>
+        <item>@string/on_even_weeks</item>
+    </array>
+
+    <array name="tag_names">
+        <item>@string/tag_home</item>
+        <item>@string/tag_work</item>
+        <item>@string/tag_study</item>
+        <item>@string/tag_health</item>
+        <item>@string/tag_friends</item>
+        <item>@string/tag_sport</item>
+        <item>@string/tag_family</item>
+        <item>@string/tag_leisure</item>
+    </array>
+
+    <string-array name="tag_colors">
+        <item>#FF8080</item>
+        <item>#FFC080</item>
+        <item>#FFFF80</item>
+        <item>#80FF80</item>
+        <item>#80FFFF</item>
+        <item>#80C0FF</item>
+        <item>#FF80FF</item>
+        <item>#C080FF</item>
+    </string-array>
+</resources>

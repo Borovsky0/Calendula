@@ -4,13 +4,20 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
@@ -19,18 +26,23 @@ import androidx.annotation.Nullable;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.TimeZone;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class AddBottomSheet extends BottomSheetDialogFragment {
 
     EditText name, date, time, repeat, text_note;
-    Button button;
+    ImageView button_ok, button_cancel, button_tag_add;
+    TextView [] tags = new TextView[3];
 
     Calendar calendar;
     String dataDate;
-    String [] repeatList;
-    int dataDayRepeat = 0, dataWeekRepeat = 0;
+    String [] repeatList, tagListNames, tagListColors;
+    int dataDayRepeat = 0, dataWeekRepeat = 0, tagCount = 0, curTag = 0;
+    Integer [] dataTags = {-1, -1, -1};
 
     @Nullable
     @Override
@@ -39,10 +51,15 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
 
         name = view.findViewById(R.id.editName);
         date = view.findViewById(R.id.editDate);
-        time = view.findViewById(R.id.editTime);
         repeat = view.findViewById(R.id.editRepeat);
+        time = view.findViewById(R.id.editTime);
+        button_tag_add = view.findViewById(R.id.button_tag_add);
+        tags[0] = view.findViewById(R.id.tag1);
+        tags[1] = view.findViewById(R.id.tag2);
+        tags[2] = view.findViewById(R.id.tag3);
         text_note = view.findViewById(R.id.editTextNote);
-        button = view.findViewById(R.id.button);
+        button_ok = view.findViewById(R.id.button_ok);
+        button_cancel = view.findViewById(R.id.button_cancel);
 
         //name.requestFocus();
 
@@ -72,25 +89,7 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
             }
         });
 
-        time.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), R.style.CustomTimePickerTheme, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-                        calendar.set(Calendar.HOUR_OF_DAY, hour);
-                        calendar.set(Calendar.MINUTE, minute);
-                        calendar.setTimeZone(TimeZone.getDefault());
-                        time.setText(new SimpleDateFormat("H:mm").format(calendar.getTime()));
-                    }
-                }, hour, minute, true);
-                //timePickerDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_MASK_STATE);
-                timePickerDialog.show();
-            }
-        });
-
-        repeatList = new String[]{getString(R.string.once), getString(R.string.weekly),
-                getString(R.string.on_odd_weeks), getString(R.string.on_even_weeks)};
+        repeatList = getResources().getStringArray(R.array.repeat);
 
         repeat.setOnClickListener(new View.OnClickListener() {
 
@@ -123,8 +122,82 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
             }
         });
 
+        time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), R.style.CustomTimePickerTheme, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+                        calendar.set(Calendar.HOUR_OF_DAY, hour);
+                        calendar.set(Calendar.MINUTE, minute);
+                        calendar.setTimeZone(TimeZone.getDefault());
+                        time.setText(new SimpleDateFormat("H:mm").format(calendar.getTime()));
+                    }
+                }, hour, minute, true);
+                //timePickerDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_MASK_STATE);
+                timePickerDialog.show();
+            }
+        });
 
-        button.setOnClickListener(new View.OnClickListener() {
+        tagListNames = getResources().getStringArray(R.array.tag_names);
+        tagListColors = getResources().getStringArray(R.array.tag_colors);
+
+        button_tag_add.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View view) {
+
+                curTag = 0;
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.CustomAlertDialogTheme);
+                builder.setTitle(getString(R.string.add_tag));
+                builder.setSingleChoiceItems(tagListNames, 0, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        if(tagCount < 3)
+                        {
+                            curTag = i;
+                        }
+                    }
+                });
+
+                builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        if(!intContains(dataTags, curTag) && tagCount < 3)
+                        {
+                            dataTags[tagCount] = curTag;
+
+                            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) button_tag_add.getLayoutParams();
+                            params.setMarginStart((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                                    8, getResources().getDisplayMetrics())); //convert pixels to dp
+                            button_tag_add.setLayoutParams(params);
+
+                            Drawable drawable = getResources().getDrawable(R.drawable.rounded_corner_text);
+                            drawable.setColorFilter(Color.parseColor(tagListColors[dataTags[tagCount]]), PorterDuff.Mode.SRC_IN);
+                            tags[tagCount].setBackground(drawable);
+                            tags[tagCount].setText(tagListNames[dataTags[tagCount]]);
+                            tags[tagCount].setVisibility(View.VISIBLE);
+                            if(tagCount>0) {tags[tagCount].setLayoutParams(params);}
+
+                            tagCount+=1;
+
+                            dialogInterface.dismiss();
+                        }
+                    }
+                });
+
+                builder.setNegativeButton(getString(R.string.cancel), null);
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
+
+        button_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -136,7 +209,7 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
                         dataWeekRepeat == 0 ? "NULL" : Integer.toString(dataWeekRepeat-1),
                         time.getText().toString(),
                         "NULL",
-                        "NULL",
+                        Arrays.toString(dataTags).replaceAll("[\\s\\[\\]]",""), //replace all " ", "[", "]" with ""
                         text_note.getText().toString(),
                         "NULL",
                         "NULL");
@@ -144,7 +217,24 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
             }
         });
 
+        button_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
+
         return view;
+    }
+
+    boolean intContains(Integer[] array, int value)
+    {
+        for (int element : array) {
+            if (element == value) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

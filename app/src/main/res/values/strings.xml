@@ -20,4 +20,13 @@
     <string name="ok">OK</string>
     <string name="cancel">CANCEL</string>
     <string name="repeat">Repeat</string>
+    <string name="tag_work">Work</string>
+    <string name="tag_study">Study</string>
+    <string name="tag_leisure">Leisure</string>
+    <string name="tag_home">Home</string>
+    <string name="tag_health">Health</string>
+    <string name="tag_friends">Friends</string>
+    <string name="tag_sport">Sport</string>
+    <string name="tag_family">Family</string>
+    <string name="add_tag">Add tag</string>
 </resources>

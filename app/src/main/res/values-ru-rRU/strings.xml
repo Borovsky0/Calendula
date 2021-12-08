@@ -20,4 +20,13 @@
     <string name="ok">ОК</string>
     <string name="cancel">ОТМЕНА</string>
     <string name="repeat">Повторять</string>
+    <string name="tag_work">Работа</string>
+    <string name="tag_study">Учёба</string>
+    <string name="tag_leisure">Досуг</string>
+    <string name="tag_home">Дом</string>
+    <string name="tag_health">Здоровье</string>
+    <string name="tag_friends">Друзья</string>
+    <string name="tag_sport">Спорт</string>
+    <string name="tag_family">Семья</string>
+    <string name="add_tag">Добавить тег</string>
 </resources>
