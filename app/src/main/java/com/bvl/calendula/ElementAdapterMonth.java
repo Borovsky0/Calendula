@@ -17,6 +17,7 @@ public class ElementAdapterMonth extends BaseAdapter {
     Context context;
     ArrayList id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note;
     LayoutInflater inflater;
+    Calendar calendar;
 
     public ElementAdapterMonth(Context context, ArrayList id, ArrayList name, ArrayList date, ArrayList day_repeat,
                           ArrayList week_repeat, ArrayList time_start, ArrayList time_finish,
@@ -33,12 +34,16 @@ public class ElementAdapterMonth extends BaseAdapter {
         this.text_note = text_note;
         this.pic_note = pic_note;
         this.audio_note = audio_note;
+
+        calendar = Calendar.getInstance();
+        try { calendar.setTime(new SimpleDateFormat("yyyy/MM/dd").parse(String.valueOf(time_start.get(0)))); }
+        catch (ParseException e) { e.printStackTrace(); }
     }
 
 
     @Override
     public int getCount() {
-        return id.size();
+        return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
     @Override
@@ -62,12 +67,8 @@ public class ElementAdapterMonth extends BaseAdapter {
             view = inflater.inflate(R.layout.element_month, null);
         }
 
-        Calendar calendar = Calendar.getInstance();
-        try { calendar.setTime(new SimpleDateFormat("yyyy/MM/dd").parse(String.valueOf(time_start.get(position)))); }
-        catch (ParseException e) { e.printStackTrace(); }
-
         TextView textView = view.findViewById(R.id.day);
-        textView.setText(Integer.toString(calendar.get(Calendar.DAY_OF_MONTH)));
+        textView.setText(Integer.toString(position+1));
         return view;
     }
 }

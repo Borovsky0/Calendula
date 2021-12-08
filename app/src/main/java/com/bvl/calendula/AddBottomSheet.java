@@ -144,7 +144,7 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
                         calendar.set(Calendar.HOUR_OF_DAY, hour);
                         calendar.set(Calendar.MINUTE, minute);
                         calendar.setTimeZone(TimeZone.getDefault());
-                        time.setText(new SimpleDateFormat("H:mm").format(calendar.getTime()));
+                        time.setText(new SimpleDateFormat("HH:mm").format(calendar.getTime()));
                     }
                 }, hour, minute, true);
                 //timePickerDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_MASK_STATE);
