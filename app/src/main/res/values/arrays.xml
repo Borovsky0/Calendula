@@ -29,4 +29,15 @@
         <item>#FF80FF</item>
         <item>#C080FF</item>
     </string-array>
+
+    <string-array name="tag_text_colors">
+        <item>#804040</item>
+        <item>#806040</item>
+        <item>#808040</item>
+        <item>#408040</item>
+        <item>#408080</item>
+        <item>#406080</item>
+        <item>#804080</item>
+        <item>#604080</item>
+    </string-array>
 </resources>

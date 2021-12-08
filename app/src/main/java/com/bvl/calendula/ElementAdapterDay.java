@@ -56,6 +56,7 @@ public class ElementAdapterDay extends RecyclerView.Adapter<ElementAdapterDay.Vi
         String[] tagListId = String.valueOf(tags.get(position)).split(",");
         String[] tagListNames = context.getResources().getStringArray(R.array.tag_names);
         String[] tagListColors = context.getResources().getStringArray(R.array.tag_colors);
+        String[] tagTextColors = context.getResources().getStringArray(R.array.tag_text_colors);
 
         holder.nameTxt.setText(String.valueOf(name.get(position)));
 
@@ -88,6 +89,7 @@ public class ElementAdapterDay extends RecyclerView.Adapter<ElementAdapterDay.Vi
                 tag.setLayoutParams(params);
                 tag.setText(tagListNames[Integer.parseInt(tagListId[i])]);
                 tag.setBackground(drawable);
+                tag.setTextColor(Color.parseColor(tagTextColors[Integer.parseInt(tagListId[i])]));
 
                 holder.tags.addView(tag);
             }

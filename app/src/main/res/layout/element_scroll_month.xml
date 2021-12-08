@@ -24,7 +24,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textColor="?attr/colorSecondary"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/year"
@@ -32,7 +32,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textColor="?attr/colorSecondary"
-                android:textSize="16dp" />
+                android:textSize="12sp" />
 
         </LinearLayout>
 

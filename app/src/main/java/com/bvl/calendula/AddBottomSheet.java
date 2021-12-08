@@ -43,7 +43,7 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
 
     Calendar calendar;
     String dataDate;
-    String [] repeatList, tagListNames, tagListColors;
+    String [] repeatList, tagListNames, tagListColors, tagTextColors;
     int dataDayRepeat = 0, dataWeekRepeat = 0, tagCount = 0, curTag = 0;
     Integer [] dataTags = {-1, -1, -1};
 
@@ -154,6 +154,7 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
 
         tagListNames = getResources().getStringArray(R.array.tag_names);
         tagListColors = getResources().getStringArray(R.array.tag_colors);
+        tagTextColors = getResources().getStringArray(R.array.tag_text_colors);
 
         button_tag_add.setOnClickListener(new View.OnClickListener() {
 
@@ -193,6 +194,7 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
                             drawable.setColorFilter(Color.parseColor(tagListColors[dataTags[tagCount]]), PorterDuff.Mode.SRC_IN);
                             tags[tagCount].setBackground(drawable);
                             tags[tagCount].setText(tagListNames[dataTags[tagCount]]);
+                            tags[tagCount].setTextColor(Color.parseColor(tagTextColors[dataTags[tagCount]]));
                             tags[tagCount].setVisibility(View.VISIBLE);
                             if(tagCount>0) {tags[tagCount].setLayoutParams(params);}
 
