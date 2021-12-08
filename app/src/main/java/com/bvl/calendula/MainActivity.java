@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.bvl.calendula.ui.DayFragment;
-import com.bvl.calendula.ui.WeekFragment;
 import com.bvl.calendula.ui.MonthFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -42,10 +41,7 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.day:
                             selectedFragment = new DayFragment(todayDate);
                             break;
-                        case R.id.week:
-                            selectedFragment = new WeekFragment();
-                            break;
-                        case R.id.year:
+                        case R.id.month:
                             selectedFragment = new MonthFragment(todayDate);
                             break;
                     }

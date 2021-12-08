@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Calendula</string>
     <string name="day">Day</string>
-    <string name="week">Week</string>
     <string name="month">Month</string>
     <string name="preference">Preference</string>
     <string name="appearance">Appearance</string>
@@ -29,4 +28,6 @@
     <string name="tag_sport">Sport</string>
     <string name="tag_family">Family</string>
     <string name="add_tag">Add tag</string>
+    <string name="empty_error">Title field cannot be empty</string>
+    <string name="tags">Tags</string>
 </resources>

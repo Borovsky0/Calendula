@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,8 +37,9 @@ import java.util.stream.IntStream;
 public class AddBottomSheet extends BottomSheetDialogFragment {
 
     EditText name, date, time, repeat, text_note;
-    ImageView button_ok, button_cancel, button_tag_add;
+    ImageView button_ok, button_cancel;
     TextView [] tags = new TextView[3];
+    TextView button_tag_add;
 
     Calendar calendar;
     String dataDate;
@@ -62,6 +65,16 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
         button_cancel = view.findViewById(R.id.button_cancel);
 
         //name.requestFocus();
+
+        TypedValue value = new TypedValue(); //get color from attr
+        getContext().getTheme().resolveAttribute(R.attr.colorSecondary, value, true);
+        int colorSecondary = value.data;
+
+        GradientDrawable drawable = (GradientDrawable) getContext().getResources().getDrawable(R.drawable.rounded_corner_tag_button);
+        drawable.setStroke((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                2, getResources().getDisplayMetrics()), colorSecondary); //set stroke in dp
+
+        button_tag_add.setBackground(drawable);
 
         calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -201,19 +214,25 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
             @Override
             public void onClick(View view) {
 
-                DatabaseHelper db_helper = new DatabaseHelper(getContext());
-                db_helper.add(
-                        name.getText().toString(),
-                        dataWeekRepeat == 0 ? dataDate : "NULL",
-                        dataWeekRepeat == 0 ? "NULL" : Integer.toString(dataDayRepeat),
-                        dataWeekRepeat == 0 ? "NULL" : Integer.toString(dataWeekRepeat-1),
-                        time.getText().toString(),
-                        "NULL",
-                        Arrays.toString(dataTags).replaceAll("[\\s\\[\\]]",""), //replace all " ", "[", "]" with ""
-                        text_note.getText().toString(),
-                        "NULL",
-                        "NULL");
-                dismiss();
+                if(name.getText().toString().equals(""))
+                {
+                    Toast.makeText(getContext(), getString(R.string.empty_error), Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    DatabaseHelper db_helper = new DatabaseHelper(getContext());
+                    db_helper.add(
+                            name.getText().toString(),
+                            dataWeekRepeat == 0 ? dataDate : "NULL",
+                            dataWeekRepeat == 0 ? "NULL" : Integer.toString(dataDayRepeat),
+                            dataWeekRepeat == 0 ? "NULL" : Integer.toString(dataWeekRepeat-1),
+                            time.getText().toString().equals("--:--") ? "NULL" : time.getText().toString(),
+                            "NULL",
+                            Arrays.toString(dataTags).replaceAll("[\\s\\[\\]]",""), //replace all " ", "[", "]" with ""
+                            text_note.getText().toString(),
+                            "NULL",
+                            "NULL");
+                    dismiss();
+                }
             }
         });
 

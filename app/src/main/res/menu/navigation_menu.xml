@@ -6,12 +6,7 @@
         android:iconTint="?attr/colorSecondary"
         android:title="@string/day"/>
     <item
-        android:id="@+id/week"
-        android:icon="@drawable/ic_week"
-        android:iconTint="?attr/colorSecondary"
-        android:title="@string/week"/>
-    <item
-        android:id="@+id/year"
+        android:id="@+id/month"
         android:icon="@drawable/ic_month"
         android:iconTint="?attr/colorSecondary"
         android:title="@string/month"/>

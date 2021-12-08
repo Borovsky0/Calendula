@@ -42,10 +42,6 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
                 rowItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.element_scroll_day, parent, false);
                 break;
 
-            case "WEEK":
-                rowItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.element_scroll_week, parent, false);
-                break;
-
             case "MONTH":
                 rowItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.element_scroll_month, parent, false);
                 break;
@@ -83,11 +79,6 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
                     holder.dateText.setText(Integer.toString(calendar.get(Calendar.DAY_OF_MONTH)) + " " +
                             new SimpleDateFormat("MMM").format(calendar.getTime()));
                 }
-                break;
-
-            case "WEEK":
-                calendar.add(Calendar.WEEK_OF_YEAR, -dif);
-                holder.weekText.setText(Integer.toString(calendar.get(Calendar.WEEK_OF_YEAR)));
                 break;
 
             case "MONTH":
@@ -144,7 +135,6 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
             super(view);
             this.dayOfWeekText = view.findViewById(R.id.dayOfWeek);
             this.dateText = view.findViewById(R.id.date);
-            this.weekText = view.findViewById(R.id.week);
             this.monthText = view.findViewById(R.id.month);
             this.yearText = view.findViewById(R.id.year);
             this.linearLayout = view.findViewById(R.id.linear);

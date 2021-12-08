@@ -6,9 +6,11 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -49,23 +51,45 @@ public class ElementAdapterDay extends RecyclerView.Adapter<ElementAdapterDay.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
+        holder.tags.removeAllViews();
+
         String[] tagListId = String.valueOf(tags.get(position)).split(",");
         String[] tagListNames = context.getResources().getStringArray(R.array.tag_names);
         String[] tagListColors = context.getResources().getStringArray(R.array.tag_colors);
 
         holder.nameTxt.setText(String.valueOf(name.get(position)));
-        holder.time.setText(String.valueOf(time_finish.get(position)).equals("NULL") ? String.valueOf(time_start.get(position))
-                : String.valueOf(time_start.get(position)) + " - " + String.valueOf(time_finish.get(position)));
+
+        if(!time_start.get(position).equals("NULL")){
+        holder.time.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+            holder.time.setText(String.valueOf(time_finish.get(position)).equals("NULL") ? String.valueOf(time_start.get(position))
+                : String.valueOf(time_start.get(position)) + " - " + String.valueOf(time_finish.get(position)));}
+
+
+        String[] emptyTags = {"-1", "-1", "-1"};
+        if(!tagListId.equals(emptyTags)) {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(0,(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                    4, context.getResources().getDisplayMetrics()),0,0); //convert pixels to dp
+            holder.tags.setLayoutParams(params);
+        }
 
         for (int i = 0; i < 3; i++)
         {
             if(!tagListId[i].equals("-1"))
             {
+                TextView tag = new TextView(context);
+
                 Drawable drawable = context.getResources().getDrawable(R.drawable.rounded_corner_text);
                 drawable.setColorFilter(Color.parseColor(tagListColors[Integer.parseInt(tagListId[i])]), PorterDuff.Mode.SRC_IN);
-                holder.tags[i].setText(tagListNames[Integer.parseInt(tagListId[i])]);
-                holder.tags[i].setBackground(drawable);
-                holder.tags[i].setVisibility(View.VISIBLE);
+
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                if(i != 0){params.setMarginStart((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                        8, context.getResources().getDisplayMetrics()));} //convert pixels to dp
+                tag.setLayoutParams(params);
+                tag.setText(tagListNames[Integer.parseInt(tagListId[i])]);
+                tag.setBackground(drawable);
+
+                holder.tags.addView(tag);
             }
         }
 
@@ -79,15 +103,13 @@ public class ElementAdapterDay extends RecyclerView.Adapter<ElementAdapterDay.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView nameTxt, time;
-        TextView [] tags = new TextView[3];
+        LinearLayout tags;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTxt = itemView.findViewById(R.id.name);
             time = itemView.findViewById(R.id.time);
-            tags[0] = itemView.findViewById(R.id.tag1);
-            tags[1] = itemView.findViewById(R.id.tag2);
-            tags[2] = itemView.findViewById(R.id.tag3);
+            tags = itemView.findViewById(R.id.tags);
 
             nameTxt.setSelected(true);
         }

@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Calendula</string>
     <string name="day">День</string>
-    <string name="week">Неделя</string>
     <string name="month">Месяц</string>
     <string name="preference">Настройки</string>
     <string name="appearance">Внешний вид</string>
@@ -29,4 +28,6 @@
     <string name="tag_sport">Спорт</string>
     <string name="tag_family">Семья</string>
     <string name="add_tag">Добавить тег</string>
+    <string name="empty_error">Поле с название не может быть пустым</string>
+    <string name="tags">Теги</string>
 </resources>
