@@ -31,7 +31,7 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
     ArrayList<String> id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note;
     ElementAdapterDay adapter;
 
-    Calendar cDate = null;
+    Calendar cDate;
 
     public DayFragment(Calendar newDate)
     {

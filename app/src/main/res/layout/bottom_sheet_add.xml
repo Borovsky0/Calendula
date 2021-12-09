@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -20,15 +21,17 @@
             android:layout_marginTop="12dp"
             android:src="@drawable/ic_ok"
             app:tint="?attr/colorSecondary"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/ok" />
 
         <ImageView
             android:id="@+id/drag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_drag"
-            android:layout_toLeftOf="@+id/button_ok"
-            android:layout_toRightOf="@+id/button_cancel"/>
+            android:layout_toStartOf="@+id/button_ok"
+            android:layout_toEndOf="@+id/button_cancel"
+            android:contentDescription="@string/drag" />
 
         <ImageView
             android:id="@+id/button_cancel"
@@ -37,7 +40,8 @@
             android:layout_marginTop="12dp"
             android:src="@drawable/ic_cancel"
             app:tint="?attr/colorSecondary"
-            android:layout_alignParentStart="true"/>
+            android:layout_alignParentStart="true"
+            android:contentDescription="@string/cancel" />
 
 
     </RelativeLayout>
@@ -53,12 +57,13 @@
         android:drawableEnd="@drawable/ic_name"
         android:drawableTint="?attr/colorSecondary"
         android:hint="@string/todo"
-        android:textColorHint="?attr/colorOnSecondary"
         android:maxLength="100"
         android:singleLine="true"
         android:textColor="?attr/colorSecondary"
+        android:textColorHint="?attr/colorOnSecondary"
         android:textCursorDrawable="@drawable/color_selector_cursor"
-        android:textSize="17sp" />
+        android:textSize="17sp"
+        tools:ignore="Autofill,TextFields,TouchTargetSizeCheck" />
 
     <EditText
         android:id="@+id/editDate"
@@ -74,7 +79,8 @@
         android:focusable="false"
         android:inputType="date"
         android:textColor="?attr/colorSecondary"
-        android:textSize="17sp" />
+        android:textSize="17sp"
+        tools:ignore="Autofill,KeyboardInaccessibleWidget,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <EditText
         android:id="@+id/editRepeat"
@@ -89,9 +95,10 @@
         android:drawableTint="?attr/colorSecondary"
         android:focusable="false"
         android:inputType="none"
+        android:text="@string/once"
         android:textColor="?attr/colorSecondary"
         android:textSize="17sp"
-        android:text="@string/once"/>
+        tools:ignore="Autofill,KeyboardInaccessibleWidget,TouchTargetSizeCheck" />
 
     <EditText
         android:id="@+id/editTime"
@@ -106,9 +113,10 @@
         android:drawableTint="?attr/colorSecondary"
         android:focusable="false"
         android:inputType="date"
-        android:text="--:--"
+        android:text="@string/empty_time"
         android:textColor="?attr/colorSecondary"
-        android:textSize="17sp" />
+        android:textSize="17sp"
+        tools:ignore="Autofill,KeyboardInaccessibleWidget,TouchTargetSizeCheck" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -153,7 +161,7 @@
             android:id="@+id/button_tag_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+"
+            android:text="@string/plus"
             android:textColor="?attr/colorSecondary"
             android:textSize="12sp" />
 
@@ -171,10 +179,11 @@
         android:drawableEnd="@drawable/ic_text_note"
         android:drawableTint="?attr/colorSecondary"
         android:hint="@string/text_note"
-        android:textColorHint="?attr/colorOnSecondary"
         android:maxLength="100"
         android:textColor="?attr/colorSecondary"
+        android:textColorHint="?attr/colorOnSecondary"
         android:textCursorDrawable="@drawable/color_selector_cursor"
-        android:textSize="17sp" />
+        android:textSize="17sp"
+        tools:ignore="Autofill,TextFields,TouchTargetSizeCheck" />
 
 </LinearLayout>

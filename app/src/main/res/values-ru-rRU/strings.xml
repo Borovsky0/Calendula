@@ -34,4 +34,6 @@
     <string name="delete">"Удалить "</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
+    <string name="drag">Тянуть</string>
+    <string name="add">Добавить</string>
 </resources>

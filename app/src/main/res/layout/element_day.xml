@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/main_layout">
@@ -59,12 +60,13 @@
                 android:id="@+id/check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:layout_marginEnd="12dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:buttonTint="?attr/colorSecondary"/>
+                android:layout_marginEnd="12dp"
+                android:buttonTint="?attr/colorSecondary"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                tools:ignore="TouchTargetSizeCheck" />
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

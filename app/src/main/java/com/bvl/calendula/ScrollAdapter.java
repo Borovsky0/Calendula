@@ -1,7 +1,5 @@
 package com.bvl.calendula;
 
-import static android.icu.lang.UCharacter.toUpperCase;
-
 import android.content.Context;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -22,7 +20,7 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
     Context context;
     int centerPos = Integer.MAX_VALUE / 2;
     int row_index = centerPos;
-    private OnDateClickListener onDateClickListener;
+    private final OnDateClickListener onDateClickListener;
     String elementType;
     String[] ruMonthNames = { "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" };
     String[] ruMonthShortNames = { "янв", "фев", "мар", "апр", "мая", "июн", "июл", "авг", "сен", "окт", "ноя", "дек" };
@@ -121,16 +119,13 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView dayOfWeekText;
-        private TextView dateText;
-        private TextView weekText;
-        private TextView monthText;
-        private TextView yearText;
-        private LinearLayout linearLayout;
-        private CardView cardView;
+        private final TextView dayOfWeekText;
+        private final TextView dateText;
+        private final TextView monthText;
+        private final TextView yearText;
+        private final LinearLayout linearLayout;
+        private final CardView cardView;
 
-        private OnDateClickListener onDateClickListener;
-        
         public ViewHolder(View view, OnDateClickListener onDateClickListener) {
             super(view);
             this.dayOfWeekText = view.findViewById(R.id.dayOfWeek);
@@ -139,7 +134,6 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
             this.yearText = view.findViewById(R.id.year);
             this.linearLayout = view.findViewById(R.id.linear);
             this.cardView = view.findViewById(R.id.card);
-            this.onDateClickListener = onDateClickListener;
         }
     }
 

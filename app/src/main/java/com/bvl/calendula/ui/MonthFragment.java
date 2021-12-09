@@ -30,7 +30,7 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
     ArrayList<String> id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note;
     ElementAdapterMonth adapter;
 
-    Calendar cDate = null;
+    Calendar cDate;
 
     public MonthFragment(Calendar newDate)
     {
