@@ -72,22 +72,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_PIC_NOTE, pic_note);
         cv.put(COLUMN_AUDIO_NOTE, audio_note);
 
-        long result = db.insert(TABLE_NAME, null, cv);
-        if(result == -1)
-        {
-            Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
-        }
+        db.insert(TABLE_NAME, null, cv);
     }
 
     public Cursor read(Calendar date){
         String fDate = new SimpleDateFormat("yyyy/MM/dd").format(date.getTime());
         String dayRepeat = Integer.toString(date.get(Calendar.DAY_OF_WEEK));
         String weekRepeat =  Integer.toString(date.get(Calendar.WEEK_OF_YEAR) % 2 == 0 ? 2 : 1);
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_DATE + " = '" + fDate + "' OR (" + COLUMN_DAY_REPEAT
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE (" + COLUMN_DATE + " = '" + fDate + "' AND " + COLUMN_WEEK_REPEAT +
+                " = 'NULL')" + " OR (" + COLUMN_DAY_REPEAT
                 + " = '" + dayRepeat + "' AND (" + COLUMN_WEEK_REPEAT + " = '" + weekRepeat + "' OR " + COLUMN_WEEK_REPEAT
                 + " = '" + WEEKLY + "')) ORDER BY " + COLUMN_TIME_START + " ASC";
         SQLiteDatabase db = this.getReadableDatabase();
@@ -97,5 +90,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cursor = db.rawQuery(query, null);
         }
         return cursor;
+    }
+
+    public void update(String id, String name, String date, String day_of_week,
+                       String periodicity, String time_start, String time_finish,
+                       String tags, String text_note, String pic_note, String audio_note)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_NAME, name);
+        cv.put(COLUMN_DATE, date);
+        cv.put(COLUMN_DAY_REPEAT, day_of_week);
+        cv.put(COLUMN_WEEK_REPEAT, periodicity);
+        cv.put(COLUMN_TIME_START, time_start);
+        cv.put(COLUMN_TIME_FINISH, time_finish);
+        cv.put(COLUMN_TAGS, tags);
+        cv.put(COLUMN_TEXT_NOTE, text_note);
+        cv.put(COLUMN_PIC_NOTE, pic_note);
+        cv.put(COLUMN_AUDIO_NOTE, audio_note);
+
+        db.update(TABLE_NAME, cv, "id=?", new String[]{id});
+    }
+
+    public void delete(String id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, "id=?", new String[]{id});
     }
 }

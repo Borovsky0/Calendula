@@ -27,6 +27,7 @@ import androidx.annotation.Nullable;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -34,10 +35,12 @@ import java.util.TimeZone;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class AddBottomSheet extends BottomSheetDialogFragment {
+public class UpdateBottomSheet extends BottomSheetDialogFragment {
+
+    String d_id, d_name, d_date, d_day_repeat, d_week_repeat, d_time_start, d_time_finish, d_tags, d_text_note, d_pic_note, d_audio_note;
 
     EditText name, date, time, repeat, text_note;
-    ImageView button_ok, button_cancel;
+    ImageView button_ok, button_cancel, button_delete;
     TextView [] tags = new TextView[3];
     TextView button_tag_add;
 
@@ -47,10 +50,28 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
     int dataDayRepeat = 0, dataWeekRepeat = 0, tagCount = 0, curTag = 0;
     Integer [] dataTags = {-1, -1, -1};
 
+    public UpdateBottomSheet(String id, String name, String date, String day_of_week,
+                             String periodicity, String time_start, String time_finish,
+                             String tags, String text_note, String pic_note, String audio_note)
+    {
+        this.d_id = id;
+        this.d_name = name;
+        this.d_date = date;
+        this.d_day_repeat = day_of_week;
+        this.d_week_repeat = periodicity;
+        this.d_time_start = time_start;
+        this.d_time_finish = time_finish;
+        this.d_tags = tags;
+        this.d_text_note = text_note;
+        this.d_pic_note = pic_note;
+        this.d_audio_note = audio_note;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.bottom_sheet_add, container, false);
+
+        View view = inflater.inflate(R.layout.bottom_sheet_update, container, false);
 
         name = view.findViewById(R.id.editName);
         date = view.findViewById(R.id.editDate);
@@ -63,6 +84,64 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
         text_note = view.findViewById(R.id.editTextNote);
         button_ok = view.findViewById(R.id.button_ok);
         button_cancel = view.findViewById(R.id.button_cancel);
+        button_delete = view.findViewById(R.id.button_delete);
+
+        calendar = Calendar.getInstance();
+        try {
+            calendar.setTime(new SimpleDateFormat("yyyy/MM/dd").parse(d_date));
+        } catch (ParseException e) {
+            e.printStackTrace(); }
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        repeatList = getResources().getStringArray(R.array.repeat);
+        tagListNames = getResources().getStringArray(R.array.tag_names);
+        tagListColors = getResources().getStringArray(R.array.tag_colors);
+        tagTextColors = getResources().getStringArray(R.array.tag_text_colors);
+
+        name.setText(d_name);
+        text_note.setText(d_text_note);
+
+        dataDayRepeat = !d_day_repeat.equals("NULL") ? Integer.parseInt(d_day_repeat):0;
+        dataWeekRepeat = !d_week_repeat.equals("NULL") ? Integer.parseInt(d_week_repeat)+1:0;
+        repeat.setText(repeatList[dataWeekRepeat]);
+        date.setText(dataWeekRepeat == 0? new SimpleDateFormat("d MMMM y, EEEE").format(calendar.getTime())
+                : new SimpleDateFormat("EEEE").format(calendar.getTime()));
+
+        try {
+            calendar.setTime(new SimpleDateFormat("HH:mm").parse(d_time_start));
+        } catch (ParseException e) {
+            e.printStackTrace(); }
+
+        time.setText(d_time_start.equals("NULL") ? "--:--" : new SimpleDateFormat("HH:mm").format(calendar.getTime()));
+
+        String[] tagListId = String.valueOf(d_tags).split(",");
+        for(int i = 0; i < 3; i++)
+        {
+            dataTags[i] = Integer.parseInt(tagListId[i]);
+            if(dataTags[i] != -1)
+            {
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) button_tag_add.getLayoutParams();
+                params.setMarginStart((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                        8, getResources().getDisplayMetrics())); //convert pixels to dp
+                button_tag_add.setLayoutParams(params);
+
+                Drawable drawable = getResources().getDrawable(R.drawable.rounded_corner_text);
+                drawable.setColorFilter(Color.parseColor(tagListColors[dataTags[tagCount]]), PorterDuff.Mode.SRC_IN);
+                tags[tagCount].setBackground(drawable);
+                tags[tagCount].setText(tagListNames[dataTags[tagCount]]);
+                tags[tagCount].setTextColor(Color.parseColor(tagTextColors[dataTags[tagCount]]));
+                tags[tagCount].setVisibility(View.VISIBLE);
+                if(tagCount>0) {tags[tagCount].setLayoutParams(params);}
+
+                tagCount+=1;
+
+                if(tagCount == 3) { button_tag_add.setVisibility(View.INVISIBLE);}
+            }
+        }
 
         //name.requestFocus();
 
@@ -76,14 +155,6 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
 
         button_tag_add.setBackground(drawable);
 
-        calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-
-        date.setText(new SimpleDateFormat("d MMMM y, EEEE").format(calendar.getTime()));
         dataDate = new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime());
 
         date.setOnClickListener(new View.OnClickListener() {
@@ -101,8 +172,6 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
                 datePickerDialog.show();
             }
         });
-
-        repeatList = getResources().getStringArray(R.array.repeat);
 
         repeat.setOnClickListener(new View.OnClickListener() {
 
@@ -130,8 +199,7 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
 
                 builder.setNegativeButton(getString(R.string.cancel), null);
 
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                builder.create().show();
             }
         });
 
@@ -152,12 +220,7 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
             }
         });
 
-        tagListNames = getResources().getStringArray(R.array.tag_names);
-        tagListColors = getResources().getStringArray(R.array.tag_colors);
-        tagTextColors = getResources().getStringArray(R.array.tag_text_colors);
-
         button_tag_add.setOnClickListener(new View.OnClickListener() {
-
 
             @Override
             public void onClick(View view) {
@@ -209,8 +272,7 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
 
                 builder.setNegativeButton(getString(R.string.cancel), null);
 
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                builder.create().show();
             }
         });
 
@@ -224,7 +286,8 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
                 }
                 else{
                     DatabaseHelper db_helper = new DatabaseHelper(getContext());
-                    db_helper.add(
+                    db_helper.update(
+                            d_id,
                             name.getText().toString(),
                             dataDate,
                             dataWeekRepeat == 0 ? "NULL" : Integer.toString(dataDayRepeat),
@@ -244,6 +307,31 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
             @Override
             public void onClick(View view) {
                 dismiss();
+            }
+        });
+
+        button_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.CustomAlertDialogTheme);
+                builder.setTitle(getString(R.string.delete) + d_name + "?");
+                builder.setMessage(getString(R.string.delete_confirm) + d_name + "?");
+                builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        DatabaseHelper db_helper = new DatabaseHelper(getContext());
+                        db_helper.delete(d_id);
+                        dialogInterface.dismiss();
+                        dismiss();
+                    }
+                });
+                builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder.create().show();
             }
         });
 

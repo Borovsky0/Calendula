@@ -1,6 +1,8 @@
 package com.bvl.calendula;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -14,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -49,7 +52,7 @@ public class ElementAdapterDay extends RecyclerView.Adapter<ElementAdapterDay.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         holder.tags.removeAllViews();
 
@@ -61,18 +64,9 @@ public class ElementAdapterDay extends RecyclerView.Adapter<ElementAdapterDay.Vi
         holder.nameTxt.setText(String.valueOf(name.get(position)));
 
         if(!time_start.get(position).equals("NULL")){
-        holder.time.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+        holder.time.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
             holder.time.setText(String.valueOf(time_finish.get(position)).equals("NULL") ? String.valueOf(time_start.get(position))
                 : String.valueOf(time_start.get(position)) + " - " + String.valueOf(time_finish.get(position)));}
-
-
-        String[] emptyTags = {"-1", "-1", "-1"};
-        if(!tagListId.equals(emptyTags)) {
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.setMargins(0,(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                    4, context.getResources().getDisplayMetrics()),0,0); //convert pixels to dp
-            holder.tags.setLayoutParams(params);
-        }
 
         for (int i = 0; i < 3; i++)
         {
@@ -88,12 +82,24 @@ public class ElementAdapterDay extends RecyclerView.Adapter<ElementAdapterDay.Vi
                         8, context.getResources().getDisplayMetrics()));} //convert pixels to dp
                 tag.setLayoutParams(params);
                 tag.setText(tagListNames[Integer.parseInt(tagListId[i])]);
+                tag.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
                 tag.setBackground(drawable);
                 tag.setTextColor(Color.parseColor(tagTextColors[Integer.parseInt(tagListId[i])]));
 
                 holder.tags.addView(tag);
             }
         }
+
+        holder.mainLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UpdateBottomSheet updateBottomSheet = new UpdateBottomSheet(String.valueOf(id.get(position)),String.valueOf(name.get(position)),
+                        String.valueOf(date.get(position)),String.valueOf(day_repeat.get(position)),String.valueOf(week_repeat.get(position)),
+                        String.valueOf(time_start.get(position)),String.valueOf(time_finish.get(position)),String.valueOf(tags.get(position)),
+                        String.valueOf(text_note.get(position)),String.valueOf(pic_note.get(position)),String.valueOf(audio_note.get(position)));
+                updateBottomSheet.show(((FragmentActivity) context).getSupportFragmentManager(), "TAG");
+            }
+        });
 
     }
 
@@ -105,12 +111,13 @@ public class ElementAdapterDay extends RecyclerView.Adapter<ElementAdapterDay.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView nameTxt, time;
-        LinearLayout tags;
+        LinearLayout mainLayout, tags;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTxt = itemView.findViewById(R.id.name);
             time = itemView.findViewById(R.id.time);
+            mainLayout = itemView.findViewById(R.id.main_layout);
             tags = itemView.findViewById(R.id.tags);
 
             nameTxt.setSelected(true);
