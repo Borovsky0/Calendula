@@ -99,6 +99,8 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ((MainActivity)context).setToolbarDate(calendar);
+
                 onDateClickListener.onDateClick(holder.getAdapterPosition());
                 row_index=holder.getAdapterPosition();
                 notifyDataSetChanged();

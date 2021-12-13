@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- App Theme -->
-    <style name="Theme.Calendula" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Calendula" parent="Theme.AppCompat.Light.NoActionBar">
         <!--  App color.  -->
         <item name="colorPrimary">@color/main</item>
         <item name="colorOnBackground">@color/white_secondary</item>

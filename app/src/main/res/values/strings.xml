@@ -38,4 +38,7 @@
     <string name="empty_time" translatable="false">--:--</string>
     <string name="plus" translatable="false">+</string>
     <string name="add">Add</string>
+    <string name="today">Сегодня</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="tomorrow">Tomorrow</string>
 </resources>
