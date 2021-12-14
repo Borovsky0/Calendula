@@ -5,7 +5,7 @@
     <string name="preference">Preference</string>
     <string name="appearance">Appearance</string>
     <string name="theme">Theme</string>
-    <string name="theme_choose">Choose your theme preference</string>
+    <string name="theme_choose">Theme preference</string>
     <string name="theme_light">Light theme</string>
     <string name="theme_dark">Dark theme</string>
     <string name="theme_device">Device theme</string>

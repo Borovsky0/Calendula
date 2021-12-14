@@ -30,11 +30,13 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
     ArrayList<String> id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note;
     ElementAdapterMonth adapter;
 
-    Calendar cDate;
+    public static MonthFragment newInstance(Calendar date) {
 
-    public MonthFragment(Calendar newDate)
-    {
-        this.cDate = newDate;
+        Bundle args = new Bundle();
+        args.putLong("date", date.getTime().getTime()); //getTime to calendar->date and getTime to date->milliseconds
+        MonthFragment fragment = new MonthFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Nullable
@@ -62,7 +64,9 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
         pic_note = new ArrayList<>();
         audio_note = new ArrayList<>();
 
-        toArrays(cDate);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(getArguments().getLong("date"));
+        toArrays(calendar);;
 
         adapter = new ElementAdapterMonth(MonthFragment.this.getActivity(),
                 id, name, date, day_repeat, week_repeat, time_start,

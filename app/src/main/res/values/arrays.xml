@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <array name="theme">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_device</item>
+    </array>
+
     <array name="repeat">
         <item>@string/once</item>
         <item>@string/weekly</item>

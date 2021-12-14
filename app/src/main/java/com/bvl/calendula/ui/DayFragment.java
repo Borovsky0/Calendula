@@ -21,6 +21,7 @@ import com.bvl.calendula.ScrollAdapter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickListener {
 
@@ -31,11 +32,13 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
     ArrayList<String> id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note;
     ElementAdapterDay adapter;
 
-    Calendar cDate;
+    public static DayFragment newInstance(Calendar date) {
 
-    public DayFragment(Calendar newDate)
-    {
-        this.cDate = newDate;
+        Bundle args = new Bundle();
+        args.putLong("date", date.getTime().getTime()); //getTime to calendar->date and getTime to date->milliseconds
+        DayFragment fragment = new DayFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Nullable
@@ -71,7 +74,9 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         pic_note = new ArrayList<>();
         audio_note = new ArrayList<>();
 
-        toArrays(cDate);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(getArguments().getLong("date"));
+        toArrays(calendar);
 
         adapter = new ElementAdapterDay(DayFragment.this.getActivity(),
                 id, name, date, day_repeat, week_repeat, time_start,

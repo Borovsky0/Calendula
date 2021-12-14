@@ -6,9 +6,60 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <include
+    <RelativeLayout
         android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorOnBackground">
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="17dp"
+            android:layout_marginEnd="17dp"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:layout_toLeftOf="@+id/button_language"
+            android:textColor="?attr/colorSecondary"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/button_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="17dp"
+            android:src="@drawable/ic_settings"
+            app:tint="?attr/colorSecondary" />
+
+        <ImageView
+            android:id="@+id/button_theme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="17dp"
+            android:layout_toLeftOf="@+id/button_settings"
+            app:tint="?attr/colorSecondary"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/button_language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="17dp"
+            android:layout_toLeftOf="@+id/button_theme"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_language"
+            app:tint="?attr/colorSecondary"
+            android:visibility="invisible"/>
+
+    </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/fragment_container"

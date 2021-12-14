@@ -26,6 +26,7 @@
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/ic_svg_editor_image.xml" value="0.2703125" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/ic_tag_add.xml" value="0.22314814814814815" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/ic_text_note.xml" value="0.22685185185185186" />
+        <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/ic_theme_light.xml" value="0.22870370370370371" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/ic_time.xml" value="0.2703125" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/ic_week.xml" value="0.2703125" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/rounded_corner.xml" value="0.2703125" />
@@ -38,7 +39,7 @@
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/selector.xml" value="0.2703125" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/layout-v23/bottom_sheet_add.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/layout/activity_add.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/layout/activity_main.xml" value="0.4" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/layout/bottom_sheet_add.xml" value="0.7537878787878788" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/layout/bottom_sheet_update.xml" value="0.536" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/layout/element_day.xml" value="0.5028712059064807" />
@@ -52,6 +53,7 @@
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/layout/fragment_week.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/layout/toolbar.xml" value="0.536" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/menu/navigation_menu.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/menu/settings_menu.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>
