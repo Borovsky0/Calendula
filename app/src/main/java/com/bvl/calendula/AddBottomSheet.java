@@ -228,10 +228,11 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
                             dataWeekRepeat == 0 ? "NULL" : Integer.toString(dataWeekRepeat-1),
                             time.getText().toString().equals("--:--") ? "NULL" : time.getText().toString(),
                             "NULL",
-                            Arrays.toString(dataTags).replaceAll("[\\s\\[\\]]",""), //replace all " ", "[", "]" with ""
+                            Arrays.toString(dataTags).replaceAll("[\\s\\[\\]]",""), //replace all " ", "[" and "]" with ""
                             text_note.getText().toString(),
                             "NULL",
-                            "NULL");
+                            "NULL",
+                            "FALSE");
                     dismiss();
                 }
             }

@@ -27,7 +27,7 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
     GridView gridView;
 
     DatabaseHelper db_helper;
-    ArrayList<String> id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note;
+    ArrayList<String> id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note, done;
     ElementAdapterMonth adapter;
 
     public static MonthFragment newInstance(Calendar date) {
@@ -63,6 +63,7 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
         text_note = new ArrayList<>();
         pic_note = new ArrayList<>();
         audio_note = new ArrayList<>();
+        done = new ArrayList<>();
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(getArguments().getLong("date"));
@@ -70,7 +71,7 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
 
         adapter = new ElementAdapterMonth(MonthFragment.this.getActivity(),
                 id, name, date, day_repeat, week_repeat, time_start,
-                time_finish, tags, text_note, pic_note, audio_note);
+                time_finish, tags, text_note, pic_note, audio_note, done);
         gridView.setAdapter(adapter);
 
         return v;
@@ -93,6 +94,7 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
                 this.text_note.add(cursor.getString(8));
                 this.pic_note.add(cursor.getString(9));
                 this.audio_note.add(cursor.getString(10));
+                this.done.add(cursor.getString(11));
             }
         }
     }
@@ -110,6 +112,7 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
         this.text_note.clear();
         this.pic_note.clear();
         this.audio_note.clear();
+        this.done.clear();
         int dif = Integer.MAX_VALUE / 2 - position;
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH, -dif);

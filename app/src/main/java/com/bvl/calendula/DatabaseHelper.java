@@ -29,6 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_TEXT_NOTE = "text_note";
     private static final String COLUMN_PIC_NOTE = "pic_note";
     private static final String COLUMN_AUDIO_NOTE = "audio_note";
+    private static final String COLUMN_DONE = "done";
 
     private static final String WEEKLY = "0";
 
@@ -42,7 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query = "CREATE TABLE " + TABLE_NAME + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_NAME + " TEXT, " + COLUMN_DATE + " TEXT, " + COLUMN_DAY_REPEAT + " TEXT, " + COLUMN_WEEK_REPEAT + " TEXT, " +
                 COLUMN_TIME_START + " TEXT, " + COLUMN_TIME_FINISH + " TEXT, " + COLUMN_TAGS + " TEXT, " + COLUMN_TEXT_NOTE + " TEXT, " +
-                COLUMN_PIC_NOTE + " TEXT, " + COLUMN_AUDIO_NOTE + " TEXT);";
+                COLUMN_PIC_NOTE + " TEXT, " + COLUMN_AUDIO_NOTE + " TEXT, " + COLUMN_DONE + " TEXT);";
         db.execSQL(query);
     }
 
@@ -54,7 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     void add(String name, String date, String day_of_week,
              String periodicity, String time_start, String time_finish,
-             String tags, String text_note, String pic_note, String audio_note){
+             String tags, String text_note, String pic_note, String audio_note, String done){
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -69,6 +70,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_TEXT_NOTE, text_note);
         cv.put(COLUMN_PIC_NOTE, pic_note);
         cv.put(COLUMN_AUDIO_NOTE, audio_note);
+        cv.put(COLUMN_DONE, done);
 
         db.insert(TABLE_NAME, null, cv);
     }
@@ -114,5 +116,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, "id=?", new String[]{id});
+    }
+
+    public void done(String id, String done)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_DONE, done);
+        db.update(TABLE_NAME, cv, "id=?", new String[]{id});
     }
 }

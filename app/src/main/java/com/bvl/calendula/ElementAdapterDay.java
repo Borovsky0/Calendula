@@ -9,6 +9,8 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,11 +23,11 @@ import java.util.ArrayList;
 public class ElementAdapterDay extends RecyclerView.Adapter<ElementAdapterDay.ViewHolder> {
 
     Context context;
-    ArrayList id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note;
+    ArrayList id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note, done;
 
     public ElementAdapterDay(Context context, ArrayList id, ArrayList name, ArrayList date, ArrayList day_repeat,
                              ArrayList week_repeat, ArrayList time_start, ArrayList time_finish,
-                             ArrayList tags, ArrayList text_note, ArrayList pic_note, ArrayList audio_note){
+                             ArrayList tags, ArrayList text_note, ArrayList pic_note, ArrayList audio_note, ArrayList done){
         this.context = context;
         this.id = id;
         this.name = name;
@@ -38,6 +40,7 @@ public class ElementAdapterDay extends RecyclerView.Adapter<ElementAdapterDay.Vi
         this.text_note = text_note;
         this.pic_note = pic_note;
         this.audio_note = audio_note;
+        this.done = done;
     }
 
     @NonNull
@@ -58,7 +61,9 @@ public class ElementAdapterDay extends RecyclerView.Adapter<ElementAdapterDay.Vi
         String[] tagListColors = context.getResources().getStringArray(R.array.tag_colors);
         String[] tagTextColors = context.getResources().getStringArray(R.array.tag_text_colors);
 
-        holder.nameTxt.setText(String.valueOf(name.get(position)));
+        holder.name.setText(String.valueOf(name.get(position)));
+
+        holder.done.setChecked(done.get(position).equals("TRUE") ? true : false);
 
         if(!time_start.get(position).equals("NULL")){
         holder.time.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
@@ -98,6 +103,13 @@ public class ElementAdapterDay extends RecyclerView.Adapter<ElementAdapterDay.Vi
             }
         });
 
+        holder.done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                DatabaseHelper db_helper = new DatabaseHelper(context);
+                db_helper.done(String.valueOf(id.get(position)),b == true ? "TRUE" : "FALSE");
+            }
+        });
     }
 
     @Override
@@ -107,17 +119,19 @@ public class ElementAdapterDay extends RecyclerView.Adapter<ElementAdapterDay.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView nameTxt, time;
+        TextView name, time;
         LinearLayout mainLayout, tags;
+        CheckBox done;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            nameTxt = itemView.findViewById(R.id.name);
+            name = itemView.findViewById(R.id.name);
             time = itemView.findViewById(R.id.time);
             mainLayout = itemView.findViewById(R.id.main_layout);
             tags = itemView.findViewById(R.id.tags);
+            done = itemView.findViewById(R.id.done);
 
-            nameTxt.setSelected(true);
+            name.setSelected(true);
         }
     }
 }

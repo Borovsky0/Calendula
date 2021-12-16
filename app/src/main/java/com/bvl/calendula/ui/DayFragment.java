@@ -29,7 +29,7 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
     CardView cardViewButton;
 
     DatabaseHelper db_helper;
-    ArrayList<String> id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note;
+    ArrayList<String> id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note, done;
     ElementAdapterDay adapter;
 
     public static DayFragment newInstance(Calendar date) {
@@ -73,6 +73,7 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         text_note = new ArrayList<>();
         pic_note = new ArrayList<>();
         audio_note = new ArrayList<>();
+        done = new ArrayList<>();
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(getArguments().getLong("date"));
@@ -80,7 +81,7 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
 
         adapter = new ElementAdapterDay(DayFragment.this.getActivity(),
                 id, name, date, day_repeat, week_repeat, time_start,
-                time_finish, tags, text_note, pic_note, audio_note);
+                time_finish, tags, text_note, pic_note, audio_note, done);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(DayFragment.this.getActivity()));
 
@@ -104,6 +105,7 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
                 this.text_note.add(cursor.getString(8));
                 this.pic_note.add(cursor.getString(9));
                 this.audio_note.add(cursor.getString(10));
+                this.done.add(cursor.getString(11));
             }
         }
     }
@@ -121,6 +123,7 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         this.text_note.clear();
         this.pic_note.clear();
         this.audio_note.clear();
+        this.done.clear();
         int dif = Integer.MAX_VALUE / 2 - position;
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, -dif);

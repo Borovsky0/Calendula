@@ -15,13 +15,13 @@ import java.util.Calendar;
 public class ElementAdapterMonth extends BaseAdapter {
 
     Context context;
-    ArrayList id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note;
+    ArrayList id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note, done;
     LayoutInflater inflater;
     Calendar calendar;
 
     public ElementAdapterMonth(Context context, ArrayList id, ArrayList name, ArrayList date, ArrayList day_repeat,
                           ArrayList week_repeat, ArrayList time_start, ArrayList time_finish,
-                          ArrayList tags, ArrayList text_note, ArrayList pic_note, ArrayList audio_note){
+                          ArrayList tags, ArrayList text_note, ArrayList pic_note, ArrayList audio_note, ArrayList done){
         this.context = context;
         this.id = id;
         this.name = name;
@@ -34,6 +34,7 @@ public class ElementAdapterMonth extends BaseAdapter {
         this.text_note = text_note;
         this.pic_note = pic_note;
         this.audio_note = audio_note;
+        this.done = done;
 
         calendar = Calendar.getInstance();
         try { calendar.setTime(new SimpleDateFormat("yyyy/MM/dd").parse(String.valueOf(time_start.get(0)))); }
