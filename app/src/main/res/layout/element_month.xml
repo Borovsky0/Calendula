@@ -4,13 +4,20 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@color/main">
+   >
 
     <TextView
         android:id="@+id/day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="5"
+        android:text="31"
+        android:textColor="?attr/colorSecondary"
         android:textSize="20sp" />
+
+    <LinearLayout
+        android:id="@+id/tasks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"/>
 
 </LinearLayout>

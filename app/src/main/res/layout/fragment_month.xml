@@ -29,12 +29,14 @@
 
     </androidx.cardview.widget.CardView>
 
-    <GridView
+    <TableLayout
         android:id="@+id/monthTable"
+        android:stretchColumns="*"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:numColumns="8"
-        android:layout_above="@+id/cardViewScroll" />
+        android:layout_above="@id/cardViewScroll">
+
+    </TableLayout>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/add_button"

@@ -1,11 +1,19 @@
 package com.bvl.calendula.ui;
 
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,13 +26,14 @@ import com.bvl.calendula.ElementAdapterMonth;
 import com.bvl.calendula.R;
 import com.bvl.calendula.ScrollAdapter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClickListener {
 
     RecyclerView scroll;
-    GridView gridView;
+    TableLayout table;
 
     DatabaseHelper db_helper;
     ArrayList<String> id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note, done;
@@ -49,7 +58,7 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
         scroll.setAdapter(new ScrollAdapter(this, "MONTH"));
         scroll.getLayoutManager().scrollToPosition(Integer.MAX_VALUE / 2);
 
-        gridView = v.findViewById(R.id.monthTable);
+        table = v.findViewById(R.id.monthTable);
 
         db_helper = new DatabaseHelper(MonthFragment.this.getActivity());
         id = new ArrayList<>();
@@ -67,14 +76,101 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(getArguments().getLong("date"));
-        toArrays(calendar);;
 
-        adapter = new ElementAdapterMonth(MonthFragment.this.getActivity(),
-                id, name, date, day_repeat, week_repeat, time_start,
-                time_finish, tags, text_note, pic_note, audio_note, done);
-        gridView.setAdapter(adapter);
+        setTable(table, calendar);
+
+
+        View elements [] = new View[42];
+        int count = 0;
+
+        for(int i = 0; i < table.getChildCount(); i++)
+        {
+            TableRow row = (TableRow) table.getChildAt(i);
+            for(int j = 0; j < row.getChildCount(); j++)
+            {
+                elements[count] = (View) row.getChildAt(j);
+            }
+        }
+
+        toArrays(calendar);
 
         return v;
+    }
+
+    public void setTable(TableLayout tableLayout, Calendar cal)
+    {
+        tableLayout.removeAllViews();
+        int day = 0;
+        int [][] days = new int[42][2]; //0 - day, 1 - color
+
+        TypedValue value = new TypedValue(); //get colors from attr
+        getContext().getTheme().resolveAttribute(R.attr.colorSecondary, value, true);
+        int colorSecondary = value.data;
+        getContext().getTheme().resolveAttribute(R.attr.colorOnSecondary, value, true);
+        int colorOnSecondary = value.data;
+
+        Calendar tempCal = Calendar.getInstance();
+        tempCal.setTime(cal.getTime());
+        tempCal.set(Calendar.DAY_OF_MONTH, 1);
+        int firstIndex = tempCal.get(Calendar.DAY_OF_WEEK) == 1 ? 6 : tempCal.get(Calendar.DAY_OF_WEEK)-2;
+        tempCal.add(Calendar.DATE, -firstIndex);
+
+        for(int i = 0; i < days.length; i++)
+        {
+            days[i][0] = tempCal.get(Calendar.DAY_OF_MONTH);
+            days[i][1] = tempCal.get(Calendar.MONTH) == cal.get(Calendar.MONTH) ? colorSecondary : colorOnSecondary;
+            tempCal.add(Calendar.DATE, 1);
+        }
+
+        for (int i = 0; i < 7; i++) {
+
+            TableRow tableRow = new TableRow(getContext());
+            tableRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+            tableRow.setGravity(Gravity.CENTER);
+            if(i != 0) {
+                tableRow.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));}
+
+            for (int j = 0; j < 8; j++) {
+                View element =  null;
+                if (i == 0)
+                {
+                    element = getLayoutInflater().inflate(R.layout.element_text, null);
+                    TextView date = element.findViewById(R.id.data);
+                    if (j != 0) {date.setText("пн");}
+                }
+                else
+                {
+                    if(j == 0)
+                    {
+                        element = getLayoutInflater().inflate(R.layout.element_text, null);
+                        TextView date = element.findViewById(R.id.data);
+                        date.setText("22");
+                    }
+                    if(j > 0)
+                    {
+                        element = getLayoutInflater().inflate(R.layout.element_month, null);
+                        TextView date = element.findViewById(R.id.day);
+                        date.setText(String.valueOf(days[day][0]));
+                        date.setTextColor(days[day][1]);
+                        element.setTag(days[day][1] == colorSecondary ? String.valueOf(date.getText()) : "NULL");
+
+                        element.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(getContext(), (String) view.getTag() , Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        day++;
+                    }
+                }
+
+                tableRow.addView(element);
+            }
+
+            tableLayout.addView(tableRow, i);
+        }
     }
 
     void toArrays(Calendar desiredDate){
@@ -117,8 +213,7 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH, -dif);
         toArrays(calendar);
-        adapter.calendarChangeCurrentDate(calendar);
-        adapter.notifyDataSetChanged();
-    }
 
+        setTable(table, calendar);
+    }
 }
