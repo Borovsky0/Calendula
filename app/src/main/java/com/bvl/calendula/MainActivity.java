@@ -24,6 +24,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,13 +36,15 @@ public class MainActivity extends AppCompatActivity {
     Animation open, close, rotateF, rotateB;
     boolean settingsOpen = false;
 
-    String [] themeList, languageList;
+    String [] themeList, monthNamesRU;
     int theme = 0; //0 - light theme, 1 - dark theme, 2 - device theme
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        monthNamesRU = getResources().getStringArray(R.array.month_names_ru);
 
         todayDate = Calendar.getInstance();
 
@@ -62,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         theme = appSettings.getInt("Theme", 2);
         setTheme(theme, appSettingsEditor, button_theme);
 
-        setToolbarDate(todayDate);
+        setToolbarDay(todayDate);
 
         button_settings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void setToolbarDate(Calendar cal)
+    public void setToolbarDay(Calendar cal)
     {
         Calendar calT = Calendar.getInstance(); //today
         if(cal.get(Calendar.DAY_OF_YEAR) == calT.get(Calendar.DAY_OF_YEAR) &&
@@ -193,6 +196,16 @@ public class MainActivity extends AppCompatActivity {
         date.setText(new SimpleDateFormat("d MMMM, E").format(cal.getTime()));
     }
 
+    public void setToolbarMonth(Calendar cal)
+    {
+        if(Locale.getDefault().getLanguage() == "ru") {
+            date.setText(monthNamesRU[cal.get(Calendar.MONTH)] + ", " + Integer.toString(cal.get(Calendar.YEAR)));
+        }
+        else {
+            date.setText(new SimpleDateFormat("MMMM, yyyy").format(cal.getTime()));
+        }
+    }
+
     private BottomNavigationView.OnNavigationItemSelectedListener listener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -201,9 +214,11 @@ public class MainActivity extends AppCompatActivity {
                     switch (item.getItemId())
                     {
                         case R.id.day:
+                            setToolbarDay(todayDate);
                             selectedFragment = DayFragment.newInstance(todayDate);
                             break;
                         case R.id.month:
+                            setToolbarMonth(todayDate);
                             selectedFragment = MonthFragment.newInstance(todayDate);
                             break;
                     }

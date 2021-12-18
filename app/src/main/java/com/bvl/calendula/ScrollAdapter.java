@@ -22,8 +22,8 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
     int row_index = centerPos;
     private final OnDateClickListener onDateClickListener;
     String elementType;
-    String[] ruMonthNames = { "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" };
-    String[] ruMonthShortNames = { "янв", "фев", "мар", "апр", "мая", "июн", "июл", "авг", "сен", "окт", "ноя", "дек" };
+    String[] monthNamesRU;
+    String[] shortMonthNamesRU;
 
     public ScrollAdapter(OnDateClickListener onDateClickListener, String element){
         this.onDateClickListener = onDateClickListener;
@@ -63,6 +63,9 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
         context.getTheme().resolveAttribute(R.attr.colorAccent, value, true);
         int colorOnBackground = value.data;
 
+        monthNamesRU = context.getResources().getStringArray(R.array.month_names_ru);
+        shortMonthNamesRU = context.getResources().getStringArray(R.array.short_month_names_ru);
+
         switch (elementType)
         {
             case "DAY":
@@ -71,7 +74,7 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
 
                 if(Locale.getDefault().getLanguage() == "ru") {
                     holder.dateText.setText(Integer.toString(calendar.get(Calendar.DAY_OF_MONTH)) + " " +
-                            ruMonthShortNames[calendar.get(Calendar.MONTH)]);
+                            shortMonthNamesRU[calendar.get(Calendar.MONTH)]);
                 }
                 else {
                     holder.dateText.setText(Integer.toString(calendar.get(Calendar.DAY_OF_MONTH)) + " " +
@@ -83,7 +86,7 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
                 calendar.add(Calendar.MONTH, -dif);
 
                 if(Locale.getDefault().getLanguage() == "ru") {
-                    holder.monthText.setText(ruMonthNames[calendar.get(Calendar.MONTH)]);
+                    holder.monthText.setText(monthNamesRU[calendar.get(Calendar.MONTH)]);
                 }
                 else {
                     holder.monthText.setText(new SimpleDateFormat("MMMM").format(calendar.getTime()));
@@ -99,7 +102,18 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)context).setToolbarDate(calendar);
+
+                switch (elementType)
+                {
+                    case "DAY":
+                        ((MainActivity)context).setToolbarDay(calendar);
+                        break;
+                    case "MONTH":
+                        ((MainActivity)context).setToolbarMonth(calendar);
+                        break;
+                    default:
+                        break;
+                }
 
                 onDateClickListener.onDateClick(holder.getAdapterPosition());
                 row_index=holder.getAdapterPosition();

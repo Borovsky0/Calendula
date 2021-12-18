@@ -33,7 +33,6 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
     ElementAdapterDay adapter;
 
     public static DayFragment newInstance(Calendar date) {
-
         Bundle args = new Bundle();
         args.putLong("date", date.getTime().getTime()); //getTime to calendar->date and getTime to date->milliseconds
         DayFragment fragment = new DayFragment();
