@@ -117,6 +117,7 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH, -dif);
         toArrays(calendar);
+        adapter.calendarChangeCurrentDate(calendar);
         adapter.notifyDataSetChanged();
     }
 

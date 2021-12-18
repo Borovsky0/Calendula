@@ -3,18 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Lapte/Desktop/androidstudio/Calendula/app/src/main/res/layout/element_month.xml" value="0.2604166666666667" />
+        <entry key="..\:/Users/Lapte/Desktop/androidstudio/Calendula/app/src/main/res/layout/fragment_month.xml" value="0.2033514492753623" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2703125" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/color_cursor.xml" value="0.2703125" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/color_selector.xml" value="0.2703125" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/color_selector_cursor.xml" value="0.2703125" />
-        <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/color_selector_icon.xml" value="0.24074074074074073" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/ic_add.xml" value="0.2703125" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/ic_baseline_accessibility_24.xml" value="0.2703125" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/ic_cancel.xml" value="0.22685185185185186" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/ic_check.xml" value="0.2703125" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/ic_date.xml" value="0.2703125" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/ic_day.xml" value="0.2703125" />
-        <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/ic_delete.xml" value="0.24074074074074073" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/ic_drag.xml" value="0.22685185185185186" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/ic_dragger.xml" value="0.2703125" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2703125" />
@@ -41,7 +41,6 @@
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/layout/activity_add.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/layout/activity_main.xml" value="0.4" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/layout/bottom_sheet_add.xml" value="0.7537878787878788" />
-        <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/layout/bottom_sheet_update.xml" value="0.536" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/layout/element_day.xml" value="0.5028712059064807" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/layout/element_month.xml" value="0.4" />
         <entry key="..\:/Users/Vanya/Desktop/AndroidStudio/Calendula/app/src/main/res/layout/element_scroll.xml" value="0.72" />
