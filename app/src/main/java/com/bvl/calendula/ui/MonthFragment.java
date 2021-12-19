@@ -192,6 +192,7 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
 
                         TextView date = element.findViewById(R.id.day);
                         LinearLayout tasks = element.findViewById(R.id.tasks);
+                        LinearLayout tasks2 = element.findViewById(R.id.tasks2);
                         date.setText(String.valueOf(days[day][0]));
                         date.setTextColor(days[day][1] == 1 ? colorSecondary : colorOnSecondary);
 
@@ -202,7 +203,7 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
                             tempCal.add(Calendar.DAY_OF_MONTH, 1);
 
                             int k = 0;
-                            while(k < id.size() && k < 3)
+                            while(k < id.size() && k < 6)
                             {
                                 ImageView task = new ImageView(getContext());
                                 Drawable taskCircle = getResources().getDrawable(R.drawable.circle_task);
@@ -221,8 +222,9 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
                                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                                 params.setMargins(taskMargin, 0, taskMargin, 0);
                                 task.setLayoutParams(params);
-                                tasks.addView(task);
 
+                                if(k < 3) { tasks.addView(task);}
+                                else { tasks2.addView(task);}
                                 k++;
                             }
                         }
