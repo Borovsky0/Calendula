@@ -91,8 +91,6 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
             }
         }
 
-        toArrays(calendar);
-
         return v;
     }
 
@@ -142,6 +140,9 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
             tempCal.add(Calendar.WEEK_OF_YEAR, 1);
         }
 
+        tempCal.setTime(cal.getTime());
+        tempCal.set(Calendar.DAY_OF_MONTH, 1);
+        
         for (int i = 0; i < numRows; i++) {
 
             TableRow tableRow = new TableRow(getContext());
@@ -170,10 +171,20 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
                     if(j > 0)
                     {
                         element = getLayoutInflater().inflate(R.layout.element_month, null);
+                        String tDate = new SimpleDateFormat("yyyy/MM/").format(cal.getTime()) + 
+                                String.valueOf(days[day][0]); // day - index of displaying day
+                        element.setTag(days[day][1] == 1 ? tDate : "NULL");
+
+                        //тут
+                        if (days[day][1] == 1) {
+                            tempCal.add(Calendar.DAY_OF_MONTH, 1);
+                            clearData();
+                            toArrays(tempCal);
+                        }
+
                         TextView date = element.findViewById(R.id.day);
                         date.setText(String.valueOf(days[day][0]));
                         date.setTextColor(days[day][1] == 1 ? colorSecondary : colorOnSecondary);
-                        element.setTag(days[day][1] == 1 ? String.valueOf(date.getText()) : "NULL");
 
                         element.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -217,6 +228,14 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
 
     @Override
     public void onDateClick(int position) {
+        clearData();
+        int dif = Integer.MAX_VALUE / 2 - position;
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, -dif);
+        setTable(table, calendar);
+    }
+    
+    private void clearData(){
         this.id.clear();
         this.name.clear();
         this.date.clear();
@@ -229,11 +248,5 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
         this.pic_note.clear();
         this.audio_note.clear();
         this.done.clear();
-        int dif = Integer.MAX_VALUE / 2 - position;
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, -dif);
-        toArrays(calendar);
-
-        setTable(table, calendar);
     }
 }

@@ -23,7 +23,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickListener {
+public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickListener, 
+        AddBottomSheet.OnOkButtonClickListener {
 
     RecyclerView recyclerView, scroll;
     CardView cardViewButton;
@@ -55,7 +56,7 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         cardViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddBottomSheet addBottomSheet = new AddBottomSheet();
+                AddBottomSheet addBottomSheet = new AddBottomSheet(DayFragment.this);
                 addBottomSheet.show(getActivity().getSupportFragmentManager(), "TAG");
             }
         });
@@ -126,6 +127,24 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         int dif = Integer.MAX_VALUE / 2 - position;
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, -dif);
+        toArrays(calendar);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onOkButtonClick(Calendar calendar) {
+        this.id.clear();
+        this.name.clear();
+        this.date.clear();
+        this.day_repeat.clear();
+        this.week_repeat.clear();
+        this.time_start.clear();
+        this.time_finish.clear();
+        this.tags.clear();
+        this.text_note.clear();
+        this.pic_note.clear();
+        this.audio_note.clear();
+        this.done.clear();
         toArrays(calendar);
         adapter.notifyDataSetChanged();
     }

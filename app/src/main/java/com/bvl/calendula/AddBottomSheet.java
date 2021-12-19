@@ -43,7 +43,13 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
     String [] repeatList, tagListNames, tagListColors, tagTextColors;
     int dataDayRepeat = 0, dataWeekRepeat = 0, tagCount = 0, curTag = 0;
     Integer [] dataTags = {-1, -1, -1};
-
+    
+    private final OnOkButtonClickListener onOkButtonClickListener;  
+    
+    public AddBottomSheet(OnOkButtonClickListener onOkButtonClickListener){
+        this.onOkButtonClickListener = onOkButtonClickListener;
+    } 
+    
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -86,7 +92,8 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), R.style.CustomDatePickerTheme, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), 
+                        R.style.CustomDatePickerTheme, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         calendar.set(year, month, day);
@@ -233,6 +240,8 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
                             "NULL",
                             "NULL",
                             "FALSE");
+                    
+                    onOkButtonClickListener.onOkButtonClick(AddBottomSheet.this.calendar);
                     dismiss();
                 }
             }
@@ -262,5 +271,9 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.CustomBottomSheetTheme);
         super.onCreate(savedInstanceState);
+    }
+    
+    public interface OnOkButtonClickListener {
+        void onOkButtonClick(Calendar calendar);
     }
 }
