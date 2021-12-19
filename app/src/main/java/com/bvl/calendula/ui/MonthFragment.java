@@ -79,7 +79,6 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
 
         setTable(table, calendar);
 
-
         View elements [] = new View[42];
         int count = 0;
 
@@ -100,8 +99,10 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
     public void setTable(TableLayout tableLayout, Calendar cal)
     {
         tableLayout.removeAllViews();
-        int day = 0;
-        int [][] days = new int[42][2]; //0 - day, 1 - color
+        int N = 42, day = 0, numRows = 0, week = 0;
+        int [] weeks;
+        int [][] days = new int[N][2]; //0 - day, 1 - in this month? 0-no, 1-yes
+        String [] dayNames = new String[7];
 
         TypedValue value = new TypedValue(); //get colors from attr
         getContext().getTheme().resolveAttribute(R.attr.colorSecondary, value, true);
@@ -109,27 +110,45 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
         getContext().getTheme().resolveAttribute(R.attr.colorOnSecondary, value, true);
         int colorOnSecondary = value.data;
 
-        Calendar tempCal = Calendar.getInstance();
+        Calendar tempCal = Calendar.getInstance(); //get first day of month
         tempCal.setTime(cal.getTime());
         tempCal.set(Calendar.DAY_OF_MONTH, 1);
         int firstIndex = tempCal.get(Calendar.DAY_OF_WEEK) == 1 ? 6 : tempCal.get(Calendar.DAY_OF_WEEK)-2;
         tempCal.add(Calendar.DATE, -firstIndex);
 
-        for(int i = 0; i < days.length; i++)
+        for(int i = 0; i < days.length; i++) //days in calendar
         {
             days[i][0] = tempCal.get(Calendar.DAY_OF_MONTH);
-            days[i][1] = tempCal.get(Calendar.MONTH) == cal.get(Calendar.MONTH) ? colorSecondary : colorOnSecondary;
+            days[i][1] = tempCal.get(Calendar.MONTH) == cal.get(Calendar.MONTH) ? 1 : 0;
             tempCal.add(Calendar.DATE, 1);
         }
 
-        for (int i = 0; i < 7; i++) {
+        for(int i = 0; i < 7; i++) //days names
+        {
+            dayNames[i] = new SimpleDateFormat("E").format(tempCal.getTime());
+            tempCal.add(Calendar.DATE, 1);
+        }
+
+        if(days[N-1][1] == 0 && days[N-7][1] == 0) //number of rows in calendar
+        { numRows = 6; }
+        else { numRows = 7; }
+
+        weeks = new int[numRows-1]; //week numbers
+        tempCal.setTime(cal.getTime());
+        tempCal.set(Calendar.DAY_OF_MONTH, 1);
+        for(int i = 0; i < numRows-1; i++)
+        {
+            weeks[i] = tempCal.get(Calendar.WEEK_OF_YEAR);
+            tempCal.add(Calendar.WEEK_OF_YEAR, 1);
+        }
+
+        for (int i = 0; i < numRows; i++) {
 
             TableRow tableRow = new TableRow(getContext());
             tableRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
             tableRow.setGravity(Gravity.CENTER);
-            if(i != 0) {
-                tableRow.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));}
+            if(i != 0) { tableRow.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f)); }
 
             for (int j = 0; j < 8; j++) {
                 View element =  null;
@@ -137,7 +156,8 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
                 {
                     element = getLayoutInflater().inflate(R.layout.element_text, null);
                     TextView date = element.findViewById(R.id.data);
-                    if (j != 0) {date.setText("пн");}
+                    if (j != 0) {date.setText(dayNames[j-1]);}
+                    else {date.setVisibility(View.INVISIBLE);}
                 }
                 else
                 {
@@ -145,15 +165,15 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
                     {
                         element = getLayoutInflater().inflate(R.layout.element_text, null);
                         TextView date = element.findViewById(R.id.data);
-                        date.setText("22");
+                        date.setText(String.valueOf(weeks[i-1]));
                     }
                     if(j > 0)
                     {
                         element = getLayoutInflater().inflate(R.layout.element_month, null);
                         TextView date = element.findViewById(R.id.day);
                         date.setText(String.valueOf(days[day][0]));
-                        date.setTextColor(days[day][1]);
-                        element.setTag(days[day][1] == colorSecondary ? String.valueOf(date.getText()) : "NULL");
+                        date.setTextColor(days[day][1] == 1 ? colorSecondary : colorOnSecondary);
+                        element.setTag(days[day][1] == 1 ? String.valueOf(date.getText()) : "NULL");
 
                         element.setOnClickListener(new View.OnClickListener() {
                             @Override

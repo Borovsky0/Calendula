@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:textColor="?attr/colorPrimary"
         android:textSize="13sp"
+        android:text="00"
         android:gravity="center" />
 
 </LinearLayout>

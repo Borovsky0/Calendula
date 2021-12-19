@@ -6,7 +6,7 @@
         <item name="colorOnBackground">@color/black</item>
         <item name="colorSecondary">@color/white_secondary</item>
         <item name="colorAccent">@color/black_secondary</item>
-        <item name="colorOnSecondary">@color/gray</item>
+        <item name="colorOnSecondary">@color/black_gray</item>
         <!--  Status bar color.  -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorOnBackground</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
