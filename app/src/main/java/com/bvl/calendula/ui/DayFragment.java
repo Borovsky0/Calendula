@@ -27,7 +27,7 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         AddBottomSheet.OnOkButtonClickListener {
 
     RecyclerView recyclerView, scroll;
-    CardView cardViewButton;
+    CardView addButton;
 
     DatabaseHelper db_helper;
     ArrayList<String> id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note, done;
@@ -47,13 +47,13 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         View v = inflater.inflate(R.layout.fragment_day, container, false);
 
         recyclerView = v.findViewById(R.id.recycler);
-        cardViewButton = v.findViewById(R.id.add_button);
+        addButton = v.findViewById(R.id.add_button);
         scroll = v.findViewById(R.id.scroll);
         scroll.setLayoutManager(new LinearLayoutManager(DayFragment.this.getActivity(), RecyclerView.HORIZONTAL, false));
         scroll.setAdapter(new ScrollAdapter(this, "DAY"));
         scroll.getLayoutManager().scrollToPosition(Integer.MAX_VALUE / 2);
 
-        cardViewButton.setOnClickListener(new View.OnClickListener() {
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AddBottomSheet addBottomSheet = new AddBottomSheet(DayFragment.this);

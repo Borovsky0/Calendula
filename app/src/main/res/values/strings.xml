@@ -30,8 +30,8 @@
     <string name="add_tag">Add tag</string>
     <string name="empty_error">Title field cannot be empty</string>
     <string name="tags">Tags</string>
-    <string name="delete_confirm">Are you sure you want to delete</string>
-    <string name="delete">Delete</string>
+    <string name="delete_confirm">Are you sure you want to delete </string>
+    <string name="delete">Delete </string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="drag">Drag</string>

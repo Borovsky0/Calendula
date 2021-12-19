@@ -2,6 +2,8 @@ package com.bvl.calendula.ui;
 
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -17,10 +20,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bvl.calendula.AddBottomSheet;
 import com.bvl.calendula.DatabaseHelper;
 import com.bvl.calendula.ElementAdapterMonth;
 import com.bvl.calendula.R;
@@ -30,10 +35,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClickListener {
+public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClickListener, AddBottomSheet.OnOkButtonClickListener {
 
     RecyclerView scroll;
     TableLayout table;
+    CardView addButton;
 
     DatabaseHelper db_helper;
     ArrayList<String> id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note, done;
@@ -53,12 +59,20 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_month, container, false);
 
+        addButton = v.findViewById(R.id.add_button);
         scroll = v.findViewById(R.id.scroll);
         scroll.setLayoutManager(new LinearLayoutManager(MonthFragment.this.getActivity(), RecyclerView.HORIZONTAL, false));
         scroll.setAdapter(new ScrollAdapter(this, "MONTH"));
         scroll.getLayoutManager().scrollToPosition(Integer.MAX_VALUE / 2);
-
         table = v.findViewById(R.id.monthTable);
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddBottomSheet addBottomSheet = new AddBottomSheet(MonthFragment.this);
+                addBottomSheet.show(getActivity().getSupportFragmentManager(), "TAG");
+            }
+        });
 
         db_helper = new DatabaseHelper(MonthFragment.this.getActivity());
         id = new ArrayList<>();
@@ -97,10 +111,11 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
     public void setTable(TableLayout tableLayout, Calendar cal)
     {
         tableLayout.removeAllViews();
-        int N = 42, day = 0, numRows = 0, week = 0;
+        int N = 42, day = 0, numRows = 0, week = 0, taskMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                1, getResources().getDisplayMetrics()); //2dp in pixels
         int [] weeks;
         int [][] days = new int[N][2]; //0 - day, 1 - in this month? 0-no, 1-yes
-        String [] dayNames = new String[7];
+        String [] dayNames = new String[7], tagListColors = getResources().getStringArray(R.array.tag_colors);
 
         TypedValue value = new TypedValue(); //get colors from attr
         getContext().getTheme().resolveAttribute(R.attr.colorSecondary, value, true);
@@ -175,16 +190,42 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
                                 String.valueOf(days[day][0]); // day - index of displaying day
                         element.setTag(days[day][1] == 1 ? tDate : "NULL");
 
-                        //тут
-                        if (days[day][1] == 1) {
-                            tempCal.add(Calendar.DAY_OF_MONTH, 1);
-                            clearData();
-                            toArrays(tempCal);
-                        }
-
                         TextView date = element.findViewById(R.id.day);
+                        LinearLayout tasks = element.findViewById(R.id.tasks);
                         date.setText(String.valueOf(days[day][0]));
                         date.setTextColor(days[day][1] == 1 ? colorSecondary : colorOnSecondary);
+
+                        //тут
+                        if (days[day][1] == 1) {
+                            clearData();
+                            toArrays(tempCal);
+                            tempCal.add(Calendar.DAY_OF_MONTH, 1);
+
+                            int k = 0;
+                            while(k < id.size() && k < 3)
+                            {
+                                ImageView task = new ImageView(getContext());
+                                Drawable taskCircle = getResources().getDrawable(R.drawable.circle_task);
+                                char tagIndex = tags.get(k).charAt(0);
+
+                                if(tagIndex != '-')
+                                {
+                                    taskCircle.setColorFilter(Color.parseColor(tagListColors[Integer.parseInt(String.valueOf(tagIndex))]), PorterDuff.Mode.SRC_IN);
+                                }
+                                else
+                                {
+                                    taskCircle.setColorFilter(colorSecondary, PorterDuff.Mode.SRC_IN);
+                                }
+                                task.setImageDrawable(taskCircle);
+
+                                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                                params.setMargins(taskMargin, 0, taskMargin, 0);
+                                task.setLayoutParams(params);
+                                tasks.addView(task);
+
+                                k++;
+                            }
+                        }
 
                         element.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -248,5 +289,22 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
         this.pic_note.clear();
         this.audio_note.clear();
         this.done.clear();
+    }
+
+    @Override
+    public void onOkButtonClick(Calendar calendar) {
+        this.id.clear();
+        this.name.clear();
+        this.date.clear();
+        this.day_repeat.clear();
+        this.week_repeat.clear();
+        this.time_start.clear();
+        this.time_finish.clear();
+        this.tags.clear();
+        this.text_note.clear();
+        this.pic_note.clear();
+        this.audio_note.clear();
+        this.done.clear();
+        setTable(table, calendar);
     }
 }

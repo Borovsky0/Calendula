@@ -10,7 +10,6 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -29,6 +28,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     Fragment selectedFragment = null;
+    BottomNavigationView bottomNavigationView;
     Calendar todayDate;
 
     TextView date;
@@ -52,6 +52,12 @@ public class MainActivity extends AppCompatActivity {
         button_settings = findViewById(R.id.button_settings);
         button_theme = findViewById(R.id.button_theme);
         button_language = findViewById(R.id.button_language);
+
+        bottomNavigationView = findViewById(R.id.nav_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(listener);
+        if(selectedFragment == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, DayFragment.newInstance(todayDate)).commit();
+        }
 
         date.setSelected(true);
 
@@ -107,18 +113,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 animate();
+
             }
         });
-
-        BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
-        bottomNavigationView.setOnNavigationItemSelectedListener(listener);
-        if(selectedFragment == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, DayFragment.newInstance(todayDate)).commit();
-        }
     }
 
     public void setTheme(int theme, SharedPreferences.Editor editor, ImageView button)
     {
+        bottomNavigationView.setSelectedItemId(R.id.day);
         switch (theme)
         {
             case 0:
