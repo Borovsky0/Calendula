@@ -39,7 +39,8 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
     TextView [] tags = new TextView[3];
     TextView button_tag_add;
 
-    Calendar calendar, timeStartCalendar = Calendar.getInstance(), timeFinishCalendar = Calendar.getInstance();
+    Calendar calendar, timeStartCalendar = Calendar.getInstance(), 
+            timeFinishCalendar = Calendar.getInstance(), calendarChosen = Calendar.getInstance();
     String dataDate;
     String [] repeatList, tagListNames, tagListColors, tagTextColors;
     int dataDayRepeat = 0, dataWeekRepeat = 0, tagCount = 0, curTag = 0;
@@ -96,10 +97,11 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
                         R.style.CustomDatePickerTheme, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                        calendar.set(year, month, day);
-                        date.setText(dataWeekRepeat == 0 ? new SimpleDateFormat("d MMMM y, EEEE").format(calendar.getTime())
-                                : new SimpleDateFormat("EEEE").format(calendar.getTime()));
-                        dataDate = new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime());
+                        calendarChosen.set(year, month, day);
+                        date.setText(dataWeekRepeat == 0 ? 
+                                new SimpleDateFormat("d MMMM y, EEEE").format(calendarChosen.getTime())
+                                : new SimpleDateFormat("EEEE").format(calendarChosen.getTime()));
+                        dataDate = new SimpleDateFormat("yyyy/MM/dd").format(calendarChosen.getTime());
                     }
                 }, year, month, day);
                 datePickerDialog.show();
@@ -288,8 +290,11 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
                             "NULL",
                             "NULL",
                             "FALSE");
-                    
-                    onOkButtonClickListener.onOkButtonClick(AddBottomSheet.this.calendar);
+                    if (AddBottomSheet.this.calendar.get(Calendar.YEAR) == calendarChosen.get(Calendar.YEAR) &&
+                        AddBottomSheet.this.calendar.get(Calendar.MONTH) == calendarChosen.get(Calendar.MONTH) &&
+                        AddBottomSheet.this.calendar.get(Calendar.DAY_OF_MONTH) == calendarChosen.get(Calendar.DAY_OF_MONTH)){
+                        onOkButtonClickListener.onOkButtonClick(AddBottomSheet.this.calendar);
+                    }
                     dismiss();
                 }
             }
