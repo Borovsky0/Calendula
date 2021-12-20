@@ -56,6 +56,8 @@ public class ElementAdapterDay extends RecyclerView.Adapter<ElementAdapterDay.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         holder.tags.removeAllViews();
+        holder.time.setText("");
+        holder.time.setTextSize(TypedValue.COMPLEX_UNIT_SP, 0);
 
         String[] tagListId = String.valueOf(tags.get(position)).split(",");
         String[] tagListNames = context.getResources().getStringArray(R.array.tag_names);
