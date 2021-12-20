@@ -26,6 +26,7 @@ import androidx.annotation.Nullable;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -33,16 +34,17 @@ import java.util.TimeZone;
 
 public class AddBottomSheet extends BottomSheetDialogFragment {
 
-    EditText name, date, time, repeat, text_note;
+    EditText name, date, timeStart, timeFinish, repeat, textNote;
     ImageView button_ok, button_cancel;
     TextView [] tags = new TextView[3];
     TextView button_tag_add;
 
-    Calendar calendar;
+    Calendar calendar = Calendar.getInstance(), timeStartCalendar = Calendar.getInstance(), timeFinishCalendar = Calendar.getInstance();
     String dataDate;
     String [] repeatList, tagListNames, tagListColors, tagTextColors;
     int dataDayRepeat = 0, dataWeekRepeat = 0, tagCount = 0, curTag = 0;
     Integer [] dataTags = {-1, -1, -1};
+    boolean timeStartSet = false;
     
     private final OnOkButtonClickListener onOkButtonClickListener;  
     
@@ -58,12 +60,13 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
         name = view.findViewById(R.id.editName);
         date = view.findViewById(R.id.editDate);
         repeat = view.findViewById(R.id.editRepeat);
-        time = view.findViewById(R.id.editTime);
+        timeStart = view.findViewById(R.id.editTimeStart);
+        timeFinish = view.findViewById(R.id.editTimeFinish);
         button_tag_add = view.findViewById(R.id.button_tag_add);
         tags[0] = view.findViewById(R.id.tag1);
         tags[1] = view.findViewById(R.id.tag2);
         tags[2] = view.findViewById(R.id.tag3);
-        text_note = view.findViewById(R.id.editTextNote);
+        textNote = view.findViewById(R.id.editTextNote);
         button_ok = view.findViewById(R.id.button_ok);
         button_cancel = view.findViewById(R.id.button_cancel);
 
@@ -83,8 +86,6 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
 
         date.setText(new SimpleDateFormat("d MMMM y, EEEE").format(calendar.getTime()));
         dataDate = new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime());
@@ -139,18 +140,68 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
             }
         });
 
-        time.setOnClickListener(new View.OnClickListener() {
+        timeStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int hourStart = timeStartCalendar.get(Calendar.HOUR_OF_DAY);
+                int minuteStart = timeStartCalendar.get(Calendar.MINUTE);
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), R.style.CustomTimePickerTheme, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-                        calendar.set(Calendar.HOUR_OF_DAY, hour);
-                        calendar.set(Calendar.MINUTE, minute);
-                        calendar.setTimeZone(TimeZone.getDefault());
-                        time.setText(new SimpleDateFormat("HH:mm").format(calendar.getTime()));
+                        timeStartCalendar.set(Calendar.HOUR_OF_DAY, hour);
+                        timeStartCalendar.set(Calendar.MINUTE, minute);
+                        timeStartCalendar.setTimeZone(TimeZone.getDefault());
+                        timeStart.setText(new SimpleDateFormat("HH:mm").format(timeStartCalendar.getTime()));
+
+                        if(!timeStartSet)
+                        {
+                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                    ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+                            timeStart.setLayoutParams(params);
+                            timeStartSet = true;
+                        }
+                        else
+                        {
+                            if(timeStartCalendar.getTime().getTime() > timeFinishCalendar.getTime().getTime())
+                            {
+                                timeStart.setText(timeFinish.getText());
+                                timeFinish.setText(new SimpleDateFormat("HH:mm").format(timeStartCalendar.getTime()));
+                            }
+                            else
+                            {
+                                timeStart.setText(new SimpleDateFormat("HH:mm").format(timeStartCalendar.getTime()));
+                            }
+                        }
                     }
-                }, hour, minute, true);
+                }, hourStart, minuteStart, true);
+                //timePickerDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_MASK_STATE);
+                timePickerDialog.show();
+            }
+        });
+
+        timeFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int hourFinish = timeFinishCalendar.get(Calendar.HOUR_OF_DAY);
+                int minuteFinish = timeFinishCalendar.get(Calendar.MINUTE);
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), R.style.CustomTimePickerTheme, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+                        timeFinishCalendar.set(Calendar.HOUR_OF_DAY, hour);
+                        timeFinishCalendar.set(Calendar.MINUTE, minute);
+                        timeFinishCalendar.setTimeZone(TimeZone.getDefault());
+
+                        if(timeStartCalendar.getTime().getTime() > timeFinishCalendar.getTime().getTime())
+                        {
+                            timeFinish.setText(timeStart.getText());
+                            timeStart.setText(new SimpleDateFormat("HH:mm").format(timeFinishCalendar.getTime()));
+                        }
+                        else
+                        {
+                            timeFinish.setText(new SimpleDateFormat("HH:mm").format(timeFinishCalendar.getTime()));
+                        }
+                    }
+                }, hourFinish, minuteFinish, true);
                 //timePickerDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_MASK_STATE);
                 timePickerDialog.show();
             }
@@ -161,7 +212,6 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
         tagTextColors = getResources().getStringArray(R.array.tag_text_colors);
 
         button_tag_add.setOnClickListener(new View.OnClickListener() {
-
 
             @Override
             public void onClick(View view) {
@@ -213,8 +263,7 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
 
                 builder.setNegativeButton(getString(R.string.cancel), null);
 
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                builder.create().show();
             }
         });
 
@@ -233,10 +282,10 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
                             dataDate,
                             dataWeekRepeat == 0 ? "NULL" : Integer.toString(dataDayRepeat),
                             dataWeekRepeat == 0 ? "NULL" : Integer.toString(dataWeekRepeat-1),
-                            time.getText().toString().equals("--:--") ? "NULL" : time.getText().toString(),
-                            "NULL",
+                            timeStart.getText().toString().equals("--:--") ? "NULL" : timeStart.getText().toString(),
+                            timeFinish.getText().toString().equals("--:--") ? "NULL" : timeFinish.getText().toString(),
                             Arrays.toString(dataTags).replaceAll("[\\s\\[\\]]",""), //replace all " ", "[" and "]" with ""
-                            text_note.getText().toString(),
+                            textNote.getText().toString(),
                             "NULL",
                             "NULL",
                             "FALSE");

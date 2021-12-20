@@ -61,6 +61,7 @@
         android:singleLine="true"
         android:textColor="?attr/colorSecondary"
         android:textColorHint="?attr/colorOnSecondary"
+        android:textColorHighlight="@color/main"
         android:textCursorDrawable="@drawable/color_selector_cursor"
         android:textSize="17sp"
         tools:ignore="Autofill,TextFields,TouchTargetSizeCheck" />
@@ -100,23 +101,58 @@
         android:textSize="17sp"
         tools:ignore="Autofill,KeyboardInaccessibleWidget,TouchTargetSizeCheck" />
 
-    <EditText
-        android:id="@+id/editTime"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="17dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="17dp"
-        android:backgroundTint="?attr/colorSecondary"
-        android:clickable="true"
-        android:drawableEnd="@drawable/ic_time"
-        android:drawableTint="?attr/colorSecondary"
-        android:focusable="false"
-        android:inputType="date"
-        android:text="@string/empty_time"
-        android:textColor="?attr/colorSecondary"
-        android:textSize="17sp"
-        tools:ignore="Autofill,KeyboardInaccessibleWidget,TouchTargetSizeCheck" />
+        android:orientation="horizontal">
+
+
+        <EditText
+            android:id="@+id/editTimeStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?attr/colorSecondary"
+            android:clickable="true"
+            android:drawableEnd="@drawable/ic_time"
+            android:drawableTint="?attr/colorSecondary"
+            android:focusable="false"
+            android:inputType="date"
+            android:text="@string/empty_time"
+            android:textColor="?attr/colorSecondary"
+            android:textSize="17sp"
+            tools:ignore="Autofill,KeyboardInaccessibleWidget,TouchTargetSizeCheck" />
+
+        <TextView
+            android:id="@+id/dash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:textSize="17sp"
+            android:text="-"
+            android:textColor="?attr/colorSecondary" />
+
+        <EditText
+            android:id="@+id/editTimeFinish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?attr/colorSecondary"
+            android:clickable="true"
+            android:drawableEnd="@drawable/ic_time"
+            android:drawableTint="?attr/colorSecondary"
+            android:focusable="false"
+            android:inputType="date"
+            android:text="@string/empty_time"
+            android:textColor="?attr/colorSecondary"
+            android:textSize="17sp"
+            android:layout_weight="1"
+            tools:ignore="Autofill,KeyboardInaccessibleWidget,TouchTargetSizeCheck" />
+
+
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
@@ -182,6 +218,7 @@
         android:maxLength="100"
         android:textColor="?attr/colorSecondary"
         android:textColorHint="?attr/colorOnSecondary"
+        android:textColorHighlight="@color/main"
         android:textCursorDrawable="@drawable/color_selector_cursor"
         android:textSize="17sp"
         tools:ignore="Autofill,TextFields,TouchTargetSizeCheck" />
