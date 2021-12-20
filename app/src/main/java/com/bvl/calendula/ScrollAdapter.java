@@ -105,17 +105,26 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
 
                 switch (elementType)
                 {
-                    case "DAY":
-                        ((MainActivity)context).setToolbarDay(calendar);
+                    case "DAY": {
+                        ((MainActivity) context).setToolbarDay(calendar);
+                        int dif = centerPos - holder.getAdapterPosition();
+                        Calendar calendarNewSelectedDay = Calendar.getInstance();
+                        calendarNewSelectedDay.add(Calendar.DATE, -dif);
+                        onDateClickListener.onDateClick(calendarNewSelectedDay);
                         break;
-                    case "MONTH":
-                        ((MainActivity)context).setToolbarMonth(calendar);
+                    }
+                    case "MONTH": {
+                        ((MainActivity) context).setToolbarMonth(calendar);
+                        int dif = centerPos - holder.getAdapterPosition();
+                        Calendar calendarNewSelectedMonth = Calendar.getInstance();
+                        calendarNewSelectedMonth.add(Calendar.MONTH, -dif);
+                        onDateClickListener.onDateClick(calendarNewSelectedMonth);
                         break;
+                    }
                     default:
                         break;
                 }
-
-                onDateClickListener.onDateClick(holder.getAdapterPosition());
+                
                 row_index=holder.getAdapterPosition();
                 notifyDataSetChanged();
             }
@@ -154,6 +163,6 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
     }
 
     public interface OnDateClickListener {
-        void onDateClick(int position);
+        void onDateClick(Calendar calendar);
     }
 }

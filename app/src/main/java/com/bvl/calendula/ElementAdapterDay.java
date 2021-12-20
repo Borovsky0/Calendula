@@ -23,11 +23,12 @@ import java.util.ArrayList;
 public class ElementAdapterDay extends RecyclerView.Adapter<ElementAdapterDay.ViewHolder> {
 
     Context context;
-    ArrayList id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note, done;
+    ArrayList<String> id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note, done;
 
-    public ElementAdapterDay(Context context, ArrayList id, ArrayList name, ArrayList date, ArrayList day_repeat,
-                             ArrayList week_repeat, ArrayList time_start, ArrayList time_finish,
-                             ArrayList tags, ArrayList text_note, ArrayList pic_note, ArrayList audio_note, ArrayList done){
+    public ElementAdapterDay(Context context, ArrayList<String> id, ArrayList<String> name, ArrayList<String> date, ArrayList<String> day_repeat,
+                             ArrayList<String> week_repeat, ArrayList<String> time_start, ArrayList<String> time_finish,
+                             ArrayList<String> tags, ArrayList<String> text_note, ArrayList<String> pic_note, 
+                             ArrayList<String> audio_note, ArrayList<String> done){
         this.context = context;
         this.id = id;
         this.name = name;

@@ -39,7 +39,7 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
     TextView [] tags = new TextView[3];
     TextView button_tag_add;
 
-    Calendar calendar = Calendar.getInstance(), timeStartCalendar = Calendar.getInstance(), timeFinishCalendar = Calendar.getInstance();
+    Calendar calendar, timeStartCalendar = Calendar.getInstance(), timeFinishCalendar = Calendar.getInstance();
     String dataDate;
     String [] repeatList, tagListNames, tagListColors, tagTextColors;
     int dataDayRepeat = 0, dataWeekRepeat = 0, tagCount = 0, curTag = 0;
@@ -48,8 +48,9 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
     
     private final OnOkButtonClickListener onOkButtonClickListener;  
     
-    public AddBottomSheet(OnOkButtonClickListener onOkButtonClickListener){
+    public AddBottomSheet(OnOkButtonClickListener onOkButtonClickListener, Calendar calendar){
         this.onOkButtonClickListener = onOkButtonClickListener;
+        this.calendar = calendar;
     } 
     
     @Nullable
@@ -96,7 +97,7 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         calendar.set(year, month, day);
-                        date.setText(dataWeekRepeat == 0? new SimpleDateFormat("d MMMM y, EEEE").format(calendar.getTime())
+                        date.setText(dataWeekRepeat == 0 ? new SimpleDateFormat("d MMMM y, EEEE").format(calendar.getTime())
                                 : new SimpleDateFormat("EEEE").format(calendar.getTime()));
                         dataDate = new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime());
                     }

@@ -43,7 +43,8 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
 
     DatabaseHelper db_helper;
     ArrayList<String> id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note, done;
-    ElementAdapterMonth adapter;
+    Calendar calendar = Calendar.getInstance();
+    //ElementAdapterMonth adapter;
 
     public static MonthFragment newInstance(Calendar date) {
 
@@ -69,7 +70,7 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddBottomSheet addBottomSheet = new AddBottomSheet(MonthFragment.this);
+                AddBottomSheet addBottomSheet = new AddBottomSheet(MonthFragment.this, MonthFragment.this.calendar);
                 addBottomSheet.show(getActivity().getSupportFragmentManager(), "TAG");
             }
         });
@@ -88,10 +89,10 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
         audio_note = new ArrayList<>();
         done = new ArrayList<>();
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(getArguments().getLong("date"));
+        //Calendar calendar = Calendar.getInstance();
+        this.calendar.setTimeInMillis(getArguments().getLong("date"));
 
-        setTable(table, calendar);
+        setTable(table, this.calendar);
 
         View elements [] = new View[42];
         int count = 0;
@@ -270,11 +271,13 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
     }
 
     @Override
-    public void onDateClick(int position) {
+    public void onDateClick(Calendar calendar) {
         clearData();
-        int dif = Integer.MAX_VALUE / 2 - position;
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, -dif);
+        //int dif = Integer.MAX_VALUE / 2 - position;
+        //Calendar calendar = Calendar.getInstance();
+        //calendar.add(Calendar.MONTH, -dif);
+        this.calendar.clear();
+        this.calendar.setTime(calendar.getTime());
         setTable(table, calendar);
     }
     
@@ -295,18 +298,7 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
 
     @Override
     public void onOkButtonClick(Calendar calendar) {
-        this.id.clear();
-        this.name.clear();
-        this.date.clear();
-        this.day_repeat.clear();
-        this.week_repeat.clear();
-        this.time_start.clear();
-        this.time_finish.clear();
-        this.tags.clear();
-        this.text_note.clear();
-        this.pic_note.clear();
-        this.audio_note.clear();
-        this.done.clear();
+        clearData();
         setTable(table, calendar);
     }
 }

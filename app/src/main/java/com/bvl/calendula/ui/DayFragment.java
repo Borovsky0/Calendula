@@ -32,10 +32,11 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
     DatabaseHelper db_helper;
     ArrayList<String> id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note, done;
     ElementAdapterDay adapter;
+    Calendar calendar = Calendar.getInstance();
 
     public static DayFragment newInstance(Calendar date) {
         Bundle args = new Bundle();
-        args.putLong("date", date.getTime().getTime()); //getTime to calendar->date and getTime to date->milliseconds
+        args.putLong("date", date.getTime().getTime()); //getTime to calendar->datыe and getTime to date->milliseconds
         DayFragment fragment = new DayFragment();
         fragment.setArguments(args);
         return fragment;
@@ -56,7 +57,7 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddBottomSheet addBottomSheet = new AddBottomSheet(DayFragment.this);
+                AddBottomSheet addBottomSheet = new AddBottomSheet(DayFragment.this, DayFragment.this.calendar);
                 addBottomSheet.show(getActivity().getSupportFragmentManager(), "TAG");
             }
         });
@@ -75,7 +76,7 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         audio_note = new ArrayList<>();
         done = new ArrayList<>();
 
-        Calendar calendar = Calendar.getInstance();
+        //Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(getArguments().getLong("date"));
         toArrays(calendar);
 
@@ -111,28 +112,25 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
     }
 
     @Override
-    public void onDateClick(int position) {
-        this.id.clear();
-        this.name.clear();
-        this.date.clear();
-        this.day_repeat.clear();
-        this.week_repeat.clear();
-        this.time_start.clear();
-        this.time_finish.clear();
-        this.tags.clear();
-        this.text_note.clear();
-        this.pic_note.clear();
-        this.audio_note.clear();
-        this.done.clear();
-        int dif = Integer.MAX_VALUE / 2 - position;
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, -dif);
+    public void onDateClick(Calendar calendar) {
+        clearData();
+        //int dif = Integer.MAX_VALUE / 2 - position;
+        //Calendar calendar = Calendar.getInstance();
+        //calendar.add(Calendar.DATE, -dif);
+        this.calendar.clear();
+        this.calendar.setTime(calendar.getTime());
         toArrays(calendar);
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onOkButtonClick(Calendar calendar) {
+        clearData();
+        toArrays(calendar);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void clearData(){
         this.id.clear();
         this.name.clear();
         this.date.clear();
@@ -145,7 +143,6 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         this.pic_note.clear();
         this.audio_note.clear();
         this.done.clear();
-        toArrays(calendar);
-        adapter.notifyDataSetChanged();
     }
+
 }
