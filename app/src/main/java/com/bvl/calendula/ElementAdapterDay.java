@@ -58,6 +58,7 @@ public class ElementAdapterDay extends RecyclerView.Adapter<ElementAdapterDay.Vi
         holder.tags.removeAllViews();
         holder.time.setText("");
         holder.time.setTextSize(TypedValue.COMPLEX_UNIT_SP, 0);
+        holder.done.setOnCheckedChangeListener(null);
 
         String[] tagListId = String.valueOf(tags.get(position)).split(",");
         String[] tagListNames = context.getResources().getStringArray(R.array.tag_names);
