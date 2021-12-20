@@ -21,20 +21,20 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
     int centerPos = Integer.MAX_VALUE / 2;
     int row_index = centerPos;
     private final OnDateClickListener onDateClickListener;
-    String elementType;
+    String fragmentType;
     String[] monthNamesRU;
     String[] shortMonthNamesRU;
 
-    public ScrollAdapter(OnDateClickListener onDateClickListener, String element){
+    public ScrollAdapter(OnDateClickListener onDateClickListener, String fragmentType){
         this.onDateClickListener = onDateClickListener;
-        this.elementType = element;
+        this.fragmentType = fragmentType;
     }
 
     @Override
     public ScrollAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View rowItem;
-        switch (elementType)
+        switch (fragmentType)
         {
             case "DAY":
                 rowItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.element_scroll_day, parent, false);
@@ -66,7 +66,7 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
         monthNamesRU = context.getResources().getStringArray(R.array.month_names_ru);
         shortMonthNamesRU = context.getResources().getStringArray(R.array.short_month_names_ru);
 
-        switch (elementType)
+        switch (fragmentType)
         {
             case "DAY":
                 calendar.add(Calendar.DATE, -dif);
@@ -103,7 +103,7 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
             @Override
             public void onClick(View view) {
 
-                switch (elementType)
+                switch (fragmentType)
                 {
                     case "DAY": {
                         ((MainActivity) context).setToolbarDay(calendar);

@@ -37,6 +37,8 @@ import java.util.Calendar;
 
 public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClickListener, AddBottomSheet.OnOkButtonClickListener {
 
+    private static final String FRAGMENT_TYPE  = "MONTH";
+    
     RecyclerView scroll;
     TableLayout table;
     CardView addButton;
@@ -44,7 +46,6 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
     DatabaseHelper db_helper;
     ArrayList<String> id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note, done;
     Calendar calendar = Calendar.getInstance();
-    //ElementAdapterMonth adapter;
 
     public static MonthFragment newInstance(Calendar date) {
 
@@ -63,14 +64,15 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
         addButton = v.findViewById(R.id.add_button);
         scroll = v.findViewById(R.id.scroll);
         scroll.setLayoutManager(new LinearLayoutManager(MonthFragment.this.getActivity(), RecyclerView.HORIZONTAL, false));
-        scroll.setAdapter(new ScrollAdapter(this, "MONTH"));
+        scroll.setAdapter(new ScrollAdapter(this, FRAGMENT_TYPE));
         scroll.getLayoutManager().scrollToPosition(Integer.MAX_VALUE / 2);
         table = v.findViewById(R.id.monthTable);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddBottomSheet addBottomSheet = new AddBottomSheet(MonthFragment.this, MonthFragment.this.calendar);
+                AddBottomSheet addBottomSheet = new AddBottomSheet(MonthFragment.this, 
+                                                                    MonthFragment.this.calendar, MonthFragment.FRAGMENT_TYPE);
                 addBottomSheet.show(getActivity().getSupportFragmentManager(), "TAG");
             }
         });

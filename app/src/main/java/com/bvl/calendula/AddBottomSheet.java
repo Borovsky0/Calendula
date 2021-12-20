@@ -46,12 +46,14 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
     int dataDayRepeat = 0, dataWeekRepeat = 0, tagCount = 0, curTag = 0;
     Integer [] dataTags = {-1, -1, -1};
     boolean timeStartSet = false;
+    String fragmentType;
     
     private final OnOkButtonClickListener onOkButtonClickListener;  
     
-    public AddBottomSheet(OnOkButtonClickListener onOkButtonClickListener, Calendar calendar){
+    public AddBottomSheet(OnOkButtonClickListener onOkButtonClickListener, Calendar calendar, String fragmentType){
         this.onOkButtonClickListener = onOkButtonClickListener;
         this.calendar = calendar;
+        this.fragmentType = fragmentType;
     } 
     
     @Nullable
@@ -291,9 +293,21 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
                             "NULL",
                             "FALSE");
                     if (AddBottomSheet.this.calendar.get(Calendar.YEAR) == calendarChosen.get(Calendar.YEAR) &&
-                        AddBottomSheet.this.calendar.get(Calendar.MONTH) == calendarChosen.get(Calendar.MONTH) &&
-                        AddBottomSheet.this.calendar.get(Calendar.DAY_OF_MONTH) == calendarChosen.get(Calendar.DAY_OF_MONTH)){
-                        onOkButtonClickListener.onOkButtonClick(AddBottomSheet.this.calendar);
+                        AddBottomSheet.this.calendar.get(Calendar.MONTH) == calendarChosen.get(Calendar.MONTH)) {
+                        switch (fragmentType){
+                            case "DAY":
+                                if (AddBottomSheet.this.calendar.get(Calendar.DAY_OF_MONTH) == calendarChosen.get(Calendar.DAY_OF_MONTH)){
+                                    onOkButtonClickListener.onOkButtonClick(AddBottomSheet.this.calendar);
+                                }
+                                break;
+                            case "MONTH":
+                                onOkButtonClickListener.onOkButtonClick(AddBottomSheet.this.calendar);
+                                break;
+                            default:
+                                break;
+                        }
+                        //AddBottomSheet.this.calendar.get(Calendar.DAY_OF_MONTH) == calendarChosen.get(Calendar.DAY_OF_MONTH)){
+                        //onOkButtonClickListener.onOkButtonClick(AddBottomSheet.this.calendar);
                     }
                     dismiss();
                 }

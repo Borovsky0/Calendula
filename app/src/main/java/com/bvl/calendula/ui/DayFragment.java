@@ -25,7 +25,9 @@ import java.util.Date;
 
 public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickListener, 
         AddBottomSheet.OnOkButtonClickListener {
-
+    
+    private static final String FRAGMENT_TYPE = "DAY";    
+    
     RecyclerView recyclerView, scroll;
     CardView addButton;
 
@@ -36,7 +38,7 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
 
     public static DayFragment newInstance(Calendar date) {
         Bundle args = new Bundle();
-        args.putLong("date", date.getTime().getTime()); //getTime to calendar->datыe and getTime to date->milliseconds
+        args.putLong("date", date.getTime().getTime()); //getTime to calendar->date and getTime to date->milliseconds
         DayFragment fragment = new DayFragment();
         fragment.setArguments(args);
         return fragment;
@@ -51,13 +53,14 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         addButton = v.findViewById(R.id.add_button);
         scroll = v.findViewById(R.id.scroll);
         scroll.setLayoutManager(new LinearLayoutManager(DayFragment.this.getActivity(), RecyclerView.HORIZONTAL, false));
-        scroll.setAdapter(new ScrollAdapter(this, "DAY"));
+        scroll.setAdapter(new ScrollAdapter(this, FRAGMENT_TYPE));
         scroll.getLayoutManager().scrollToPosition(Integer.MAX_VALUE / 2);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddBottomSheet addBottomSheet = new AddBottomSheet(DayFragment.this, DayFragment.this.calendar);
+                AddBottomSheet addBottomSheet = new AddBottomSheet(DayFragment.this, 
+                                                                    DayFragment.this.calendar, DayFragment.FRAGMENT_TYPE);
                 addBottomSheet.show(getActivity().getSupportFragmentManager(), "TAG");
             }
         });
