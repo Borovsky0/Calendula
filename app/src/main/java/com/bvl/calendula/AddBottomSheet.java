@@ -30,6 +30,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 public class AddBottomSheet extends BottomSheetDialogFragment {
@@ -39,7 +40,7 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
     TextView [] tags = new TextView[3];
     TextView button_tag_add;
 
-    Calendar calendar, timeStartCalendar = Calendar.getInstance(), 
+    Calendar calendar = Calendar.getInstance(), timeStartCalendar = Calendar.getInstance(), 
             timeFinishCalendar = Calendar.getInstance(), calendarChosen = Calendar.getInstance();
     String dataDate;
     String [] repeatList, tagListNames, tagListColors, tagTextColors;
@@ -52,7 +53,8 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
     
     public AddBottomSheet(OnOkButtonClickListener onOkButtonClickListener, Calendar calendar, String fragmentType){
         this.onOkButtonClickListener = onOkButtonClickListener;
-        this.calendar = calendar;
+        this.calendar.setTime(calendar.getTime());
+        this.calendarChosen.setTime(calendar.getTime());
         this.fragmentType = fragmentType;
     } 
     
@@ -306,8 +308,6 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
                             default:
                                 break;
                         }
-                        //AddBottomSheet.this.calendar.get(Calendar.DAY_OF_MONTH) == calendarChosen.get(Calendar.DAY_OF_MONTH)){
-                        //onOkButtonClickListener.onOkButtonClick(AddBottomSheet.this.calendar);
                     }
                     dismiss();
                 }

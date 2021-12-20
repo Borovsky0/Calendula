@@ -94,9 +94,7 @@ public class UpdateBottomSheet extends BottomSheetDialogFragment {
         try { timeFinishCalendar.setTime(new SimpleDateFormat("HH:mm").parse(d_time_finish));
         } catch (ParseException e) { e.printStackTrace(); }
 
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        
 
         repeatList = getResources().getStringArray(R.array.repeat);
         tagListNames = getResources().getStringArray(R.array.tag_names);
@@ -169,6 +167,9 @@ public class UpdateBottomSheet extends BottomSheetDialogFragment {
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
                         R.style.CustomDatePickerTheme, new DatePickerDialog.OnDateSetListener() {
                     @Override
