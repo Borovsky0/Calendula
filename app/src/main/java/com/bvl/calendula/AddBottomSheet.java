@@ -82,17 +82,15 @@ public class AddBottomSheet extends BottomSheetDialogFragment {
 
         button_tag_add.setBackground(drawable);
 
-        calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-
         date.setText(new SimpleDateFormat("d MMMM y, EEEE").format(calendar.getTime()));
         dataDate = new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime());
 
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), 
                         R.style.CustomDatePickerTheme, new DatePickerDialog.OnDateSetListener() {
                     @Override
