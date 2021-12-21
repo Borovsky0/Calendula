@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements Communicator {
 
     public void setTheme(int theme, SharedPreferences.Editor editor, ImageView button)
     {
-        bottomNavigationView.setSelectedItemId(R.id.day);
+        setBottomNavigationDay();
         switch (theme)
         {
             case 0:
@@ -207,6 +207,11 @@ public class MainActivity extends AppCompatActivity implements Communicator {
         else {
             date.setText(new SimpleDateFormat("MMMM, yyyy").format(cal.getTime()));
         }
+    }
+
+    public void setBottomNavigationDay()
+    {
+        bottomNavigationView.setSelectedItemId(R.id.day);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener listener =

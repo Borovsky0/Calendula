@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bvl.calendula.AddBottomSheet;
 import com.bvl.calendula.DatabaseHelper;
 import com.bvl.calendula.ElementAdapterDay;
+import com.bvl.calendula.MainActivity;
 import com.bvl.calendula.R;
 import com.bvl.calendula.ScrollAdapter;
 import com.bvl.calendula.UpdateBottomSheet;
@@ -23,11 +24,14 @@ import com.bvl.calendula.UpdateBottomSheet;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickListener, 
         AddBottomSheet.OnOkButtonClickListener, UpdateBottomSheet.OnOkButtonClickListener {
-    
-    private static final String FRAGMENT_TYPE = "DAY";    
+
+    private static DayFragment instance = null;
+
+    private static final String FRAGMENT_TYPE = "DAY";
     
     RecyclerView recyclerView, scroll;
     CardView addButton;
@@ -45,17 +49,22 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         return fragment;
     }
 
+    public static DayFragment getInstance()
+    {
+        return instance;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_day, container, false);
+        instance = this;
 
         recyclerView = v.findViewById(R.id.recycler);
         addButton = v.findViewById(R.id.add_button);
         scroll = v.findViewById(R.id.scroll);
         scroll.setLayoutManager(new LinearLayoutManager(DayFragment.this.getActivity(), RecyclerView.HORIZONTAL, false));
         scroll.setAdapter(new ScrollAdapter(this, FRAGMENT_TYPE));
-        scroll.getLayoutManager().scrollToPosition(Integer.MAX_VALUE / 2);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +90,7 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         done = new ArrayList<>();
 
         calendar.setTimeInMillis(getArguments().getLong("date"));
+        setScrollPosition(calendar);
         toArrays(calendar);
 
         adapter = new ElementAdapterDay(DayFragment.this,
@@ -145,4 +155,23 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         this.done.clear();
     }
 
+    public void setScrollPosition(Calendar calendar)
+    {
+        Calendar today = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY,0);
+        calendar.set(Calendar.MINUTE,0);
+        calendar.set(Calendar.SECOND,0);
+        calendar.set(Calendar.MILLISECOND,0);
+
+        today.set(Calendar.HOUR_OF_DAY,0);
+        today.set(Calendar.MINUTE,0);
+        today.set(Calendar.SECOND,0);
+        today.set(Calendar.MILLISECOND,0);
+
+        int dif = (int) TimeUnit.DAYS.convert(-(calendar.getTimeInMillis() - today.getTimeInMillis()), TimeUnit.MILLISECONDS);
+        int position = Integer.MAX_VALUE / 2 - dif;
+        scroll.getLayoutManager().scrollToPosition(position);
+
+        //((ScrollAdapter) scroll.getAdapter()).setSelectedColor(position);
+    }
 }

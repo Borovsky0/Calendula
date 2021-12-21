@@ -31,6 +31,7 @@ import com.bvl.calendula.AddBottomSheet;
 import com.bvl.calendula.Communicator;
 import com.bvl.calendula.DatabaseHelper;
 import com.bvl.calendula.ElementAdapterMonth;
+import com.bvl.calendula.MainActivity;
 import com.bvl.calendula.R;
 import com.bvl.calendula.ScrollAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -196,9 +197,8 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
                     if(j > 0)
                     {
                         element = getLayoutInflater().inflate(R.layout.element_month, null);
-                        String tDate = new SimpleDateFormat("yyyy/MM/").format(cal.getTime()) + 
-                                String.valueOf(days[day][0]); // day - index of displaying day
-                        element.setTag(days[day][1] == 1 ? tDate : "NULL");
+                        element.setTag(days[day][1] == 1 ? new SimpleDateFormat("yyyy/MM/").format(cal.getTime()) +
+                                String.valueOf(days[day][0]) : "NULL"); // day - index of displaying day
 
                         TextView date = element.findViewById(R.id.day);
                         LinearLayout tasks = element.findViewById(R.id.tasks);
@@ -249,8 +249,15 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
                                     tempCal.setTime(new SimpleDateFormat("yyyy/MM/dd").parse((String) view.getTag()));
                                 }
                                 catch (ParseException e) { e.printStackTrace(); }
-                                communicator = (Communicator) MonthFragment.this.getActivity();
-                                communicator.passData(tempCal);
+
+                                if(!((String) view.getTag()).equals("NULL"))
+                                {
+                                    ((MainActivity) getContext()).setBottomNavigationDay();
+                                    ((MainActivity) getContext()).setToolbarDay(tempCal);
+                                    DayFragment.getInstance().setScrollPosition(tempCal);
+                                    communicator = (Communicator) MonthFragment.this.getActivity();
+                                    communicator.passData(tempCal);
+                                }
                             }
                         });
 
