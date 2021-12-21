@@ -8,6 +8,7 @@
         android:id="@+id/data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
         android:textColor="?attr/colorPrimary"
         android:textSize="13sp"
         android:text="00"
