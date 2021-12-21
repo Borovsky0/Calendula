@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements Communicator {
     Calendar todayDate;
 
     TextView date;
-    ImageView button_settings, button_theme, button_language;
+    ImageView button_settings, button_theme;
     Animation open, close, rotateF, rotateB;
     boolean settingsOpen = false;
 
@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements Communicator {
         date = findViewById(R.id.date);
         button_settings = findViewById(R.id.button_settings);
         button_theme = findViewById(R.id.button_theme);
-        button_language = findViewById(R.id.button_language);
 
         bottomNavigationView = findViewById(R.id.nav_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(listener);
@@ -113,14 +112,6 @@ public class MainActivity extends AppCompatActivity implements Communicator {
                 animate();
             }
         });
-
-        button_language.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                animate();
-
-            }
-        });
     }
 
     public void setTheme(int theme, SharedPreferences.Editor editor, ImageView button)
@@ -166,18 +157,14 @@ public class MainActivity extends AppCompatActivity implements Communicator {
         {
             button_settings.startAnimation(rotateF);
             button_theme.startAnimation(close);
-            button_language.startAnimation(close);
             button_theme.setClickable(false);
-            button_language.setClickable(false);
             settingsOpen = false;
         }
         else
         {
             button_settings.startAnimation(rotateB);
             button_theme.startAnimation(open);
-            button_language.startAnimation(open);
             button_theme.setClickable(true);
-            button_language.setClickable(true);
             settingsOpen = true;
         }
     }

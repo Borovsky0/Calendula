@@ -24,7 +24,7 @@
             android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true"
             android:singleLine="true"
-            android:layout_toLeftOf="@+id/button_language"
+            android:layout_toLeftOf="@+id/button_theme"
             android:textColor="?attr/colorSecondary"
             android:textSize="20sp" />
 
@@ -45,17 +45,6 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="17dp"
             android:layout_toLeftOf="@+id/button_settings"
-            app:tint="?attr/colorSecondary"
-            android:visibility="invisible"/>
-
-        <ImageView
-            android:id="@+id/button_language"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="17dp"
-            android:layout_toLeftOf="@+id/button_theme"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_language"
             app:tint="?attr/colorSecondary"
             android:visibility="invisible"/>
 

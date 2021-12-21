@@ -1,6 +1,5 @@
 package com.bvl.calendula.ui;
 
-import android.app.Activity;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -9,10 +8,8 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -30,11 +27,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bvl.calendula.AddBottomSheet;
 import com.bvl.calendula.Communicator;
 import com.bvl.calendula.DatabaseHelper;
-import com.bvl.calendula.ElementAdapterMonth;
 import com.bvl.calendula.MainActivity;
 import com.bvl.calendula.R;
 import com.bvl.calendula.ScrollAdapter;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
