@@ -62,7 +62,7 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         addButton = v.findViewById(R.id.add_button);
         scroll = v.findViewById(R.id.scroll);
         scroll.setLayoutManager(new LinearLayoutManager(DayFragment.this.getActivity(), RecyclerView.HORIZONTAL, false));
-        scroll.setAdapter(new ScrollAdapter(getContext(), this, FRAGMENT_TYPE));
+        scroll.setAdapter(new ScrollAdapter(this, FRAGMENT_TYPE));
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override

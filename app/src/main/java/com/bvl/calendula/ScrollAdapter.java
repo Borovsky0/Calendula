@@ -25,10 +25,9 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
     String[] monthNamesRU;
     String[] shortMonthNamesRU;
 
-    public ScrollAdapter(Context context, OnDateClickListener onDateClickListener, String fragmentType){
+    public ScrollAdapter(OnDateClickListener onDateClickListener, String fragmentType){
         this.onDateClickListener = onDateClickListener;
         this.fragmentType = fragmentType;
-        this.context = context;
     }
 
     @Override
