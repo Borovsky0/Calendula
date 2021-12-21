@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -25,7 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Communicator {
 
     Fragment selectedFragment = null;
     BottomNavigationView bottomNavigationView;
@@ -228,4 +229,16 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+    @Override
+    public void passData(Calendar data) {
+        //Bundle bundle = new Bundle();
+        //bundle.putString("date", data);
+
+        FragmentTransaction transaction = this.getSupportFragmentManager().beginTransaction();
+        DayFragment dayFragment = DayFragment.newInstance(data);
+        //dayFragment.setArguments(bundle);
+        
+        transaction.replace(R.id.fragment_container, dayFragment).commit();
+    }
 }

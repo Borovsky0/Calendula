@@ -1,5 +1,6 @@
 package com.bvl.calendula.ui;
 
+import android.app.Activity;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -26,11 +28,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bvl.calendula.AddBottomSheet;
+import com.bvl.calendula.Communicator;
 import com.bvl.calendula.DatabaseHelper;
 import com.bvl.calendula.ElementAdapterMonth;
 import com.bvl.calendula.R;
 import com.bvl.calendula.ScrollAdapter;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,6 +51,8 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
     DatabaseHelper db_helper;
     ArrayList<String> id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note, done;
     Calendar calendar = Calendar.getInstance();
+    
+    private Communicator communicator;
 
     public static MonthFragment newInstance(Calendar date) {
 
@@ -236,6 +243,14 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
                             @Override
                             public void onClick(View view) {
                                 Toast.makeText(getContext(), (String) view.getTag() , Toast.LENGTH_SHORT).show();
+                                Calendar tempCal = Calendar.getInstance();
+
+                                try {
+                                    tempCal.setTime(new SimpleDateFormat("yyyy/MM/dd").parse((String) view.getTag()));
+                                }
+                                catch (ParseException e) { e.printStackTrace(); }
+                                communicator = (Communicator) MonthFragment.this.getActivity();
+                                communicator.passData(tempCal);
                             }
                         });
 
@@ -275,9 +290,6 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
     @Override
     public void onDateClick(Calendar calendar) {
         clearData();
-        //int dif = Integer.MAX_VALUE / 2 - position;
-        //Calendar calendar = Calendar.getInstance();
-        //calendar.add(Calendar.MONTH, -dif);
         this.calendar.clear();
         this.calendar.setTime(calendar.getTime());
         setTable(table, calendar);
