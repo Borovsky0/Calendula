@@ -16,14 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bvl.calendula.AddBottomSheet;
 import com.bvl.calendula.DatabaseHelper;
 import com.bvl.calendula.ElementAdapterDay;
-import com.bvl.calendula.MainActivity;
 import com.bvl.calendula.R;
 import com.bvl.calendula.ScrollAdapter;
 import com.bvl.calendula.UpdateBottomSheet;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickListener, 
@@ -64,7 +62,7 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         addButton = v.findViewById(R.id.add_button);
         scroll = v.findViewById(R.id.scroll);
         scroll.setLayoutManager(new LinearLayoutManager(DayFragment.this.getActivity(), RecyclerView.HORIZONTAL, false));
-        scroll.setAdapter(new ScrollAdapter(this, FRAGMENT_TYPE));
+        scroll.setAdapter(new ScrollAdapter(getContext(), this, FRAGMENT_TYPE));
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,6 +170,6 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         int position = Integer.MAX_VALUE / 2 - dif;
         scroll.getLayoutManager().scrollToPosition(position);
 
-        //((ScrollAdapter) scroll.getAdapter()).setSelectedColor(position);
+        ((ScrollAdapter) scroll.getAdapter()).setNewPosition(position);
     }
 }

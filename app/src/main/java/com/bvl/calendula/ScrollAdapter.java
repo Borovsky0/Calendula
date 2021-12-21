@@ -11,8 +11,6 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bvl.calendula.ui.DayFragment;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -20,7 +18,6 @@ import java.util.Locale;
 public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder> {
 
     Context context;
-    private ViewHolder thisHolder;
     int centerPos = Integer.MAX_VALUE / 2;
     int row_index = centerPos;
     private final OnDateClickListener onDateClickListener;
@@ -28,9 +25,10 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
     String[] monthNamesRU;
     String[] shortMonthNamesRU;
 
-    public ScrollAdapter(OnDateClickListener onDateClickListener, String fragmentType){
+    public ScrollAdapter(Context context, OnDateClickListener onDateClickListener, String fragmentType){
         this.onDateClickListener = onDateClickListener;
         this.fragmentType = fragmentType;
+        this.context = context;
     }
 
     @Override
@@ -56,7 +54,6 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ScrollAdapter.ViewHolder holder, int position) {
-        thisHolder = holder;
         int dif = centerPos - position; //day difference
         Calendar calendar = Calendar.getInstance(); //get today date
 
@@ -121,13 +118,23 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
                     default:
                         break;
                 }
-                
+
                 row_index=holder.getAdapterPosition();
                 notifyDataSetChanged();
             }
         });
 
-        setSelectedColor(row_index);
+        TypedValue value = new TypedValue(); //get color from attr
+        context.getTheme().resolveAttribute(R.attr.colorPrimary, value, true);
+        int colorPrimary = value.data;
+        context.getTheme().resolveAttribute(R.attr.colorAccent, value, true);
+        int colorOnBackground = value.data;
+
+        if (row_index == holder.getAdapterPosition()) {
+            holder.cardView.setCardBackgroundColor(colorPrimary);
+        } else {
+            holder.cardView.setCardBackgroundColor(colorOnBackground);
+        }
     }
 
     @Override
@@ -159,18 +166,8 @@ public class ScrollAdapter extends RecyclerView.Adapter<ScrollAdapter.ViewHolder
         void onDateClick(Calendar calendar);
     }
 
-    public void setSelectedColor(int position)
+    public void setNewPosition(int position)
     {
-        TypedValue value = new TypedValue(); //get color from attr
-        context.getTheme().resolveAttribute(R.attr.colorPrimary, value, true);
-        int colorPrimary = value.data;
-        context.getTheme().resolveAttribute(R.attr.colorAccent, value, true);
-        int colorOnBackground = value.data;
-
-        if (position == thisHolder.getAdapterPosition()) {
-            thisHolder.cardView.setCardBackgroundColor(colorPrimary);
-        } else {
-            thisHolder.cardView.setCardBackgroundColor(colorOnBackground);
-        }
+        this.row_index = position;
     }
 }

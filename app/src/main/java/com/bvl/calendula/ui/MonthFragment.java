@@ -67,7 +67,7 @@ public class MonthFragment extends Fragment implements ScrollAdapter.OnDateClick
         addButton = v.findViewById(R.id.add_button);
         scroll = v.findViewById(R.id.scroll);
         scroll.setLayoutManager(new LinearLayoutManager(MonthFragment.this.getActivity(), RecyclerView.HORIZONTAL, false));
-        scroll.setAdapter(new ScrollAdapter(this, FRAGMENT_TYPE));
+        scroll.setAdapter(new ScrollAdapter(getContext(), this, FRAGMENT_TYPE));
         scroll.getLayoutManager().scrollToPosition(Integer.MAX_VALUE / 2);
         table = v.findViewById(R.id.monthTable);
 
