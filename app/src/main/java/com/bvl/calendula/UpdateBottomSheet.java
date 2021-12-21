@@ -389,13 +389,14 @@ public class UpdateBottomSheet extends BottomSheetDialogFragment {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.CustomAlertDialogTheme);
-                builder.setTitle(getString(R.string.delete) + d_name + "?");
-                builder.setMessage(getString(R.string.delete_confirm) + d_name + "?");
+                builder.setTitle(getString(R.string.delete) + " " + d_name + "?");
+                builder.setMessage(getString(R.string.delete_confirm) + " " + d_name + "?");
                 builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         DatabaseHelper db_helper = new DatabaseHelper(getContext());
                         db_helper.delete(d_id);
+                        onOkButtonClickListener.onOkButtonClick(UpdateBottomSheet.this.calendar);
                         dialogInterface.dismiss();
                         dismiss();
                     }
