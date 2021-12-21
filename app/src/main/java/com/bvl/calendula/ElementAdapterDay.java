@@ -18,18 +18,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bvl.calendula.ui.DayFragment;
+
 import java.util.ArrayList;
 
 public class ElementAdapterDay extends RecyclerView.Adapter<ElementAdapterDay.ViewHolder> {
 
     Context context;
+    DayFragment dayFragment; 
     ArrayList<String> id, name, date, day_repeat, week_repeat, time_start, time_finish, tags, text_note, pic_note, audio_note, done;
 
-    public ElementAdapterDay(Context context, ArrayList<String> id, ArrayList<String> name, ArrayList<String> date, ArrayList<String> day_repeat,
+    public ElementAdapterDay(DayFragment dayFragment, ArrayList<String> id, ArrayList<String> name, ArrayList<String> date, ArrayList<String> day_repeat,
                              ArrayList<String> week_repeat, ArrayList<String> time_start, ArrayList<String> time_finish,
-                             ArrayList<String> tags, ArrayList<String> text_note, ArrayList<String> pic_note, 
+                             ArrayList<String> tags, ArrayList<String> text_note, ArrayList<String> pic_note,
                              ArrayList<String> audio_note, ArrayList<String> done){
-        this.context = context;
+        this.dayFragment = dayFragment;
+        this.context = dayFragment.getContext();
         this.id = id;
         this.name = name;
         this.date = date;
@@ -102,7 +106,8 @@ public class ElementAdapterDay extends RecyclerView.Adapter<ElementAdapterDay.Vi
                 UpdateBottomSheet updateBottomSheet = new UpdateBottomSheet(String.valueOf(id.get(position)),String.valueOf(name.get(position)),
                         String.valueOf(date.get(position)),String.valueOf(day_repeat.get(position)),String.valueOf(week_repeat.get(position)),
                         String.valueOf(time_start.get(position)),String.valueOf(time_finish.get(position)),String.valueOf(tags.get(position)),
-                        String.valueOf(text_note.get(position)),String.valueOf(pic_note.get(position)),String.valueOf(audio_note.get(position)));
+                        String.valueOf(text_note.get(position)),String.valueOf(pic_note.get(position)),String.valueOf(audio_note.get(position)),
+                        ElementAdapterDay.this.dayFragment);
                 updateBottomSheet.show(((FragmentActivity) context).getSupportFragmentManager(), "TAG");
             }
         });

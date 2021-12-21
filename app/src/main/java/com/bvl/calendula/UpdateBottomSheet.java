@@ -41,16 +41,20 @@ public class UpdateBottomSheet extends BottomSheetDialogFragment {
     TextView [] tags = new TextView[3];
     TextView button_tag_add;
 
-    Calendar calendar = Calendar.getInstance(), timeStartCalendar = Calendar.getInstance(), timeFinishCalendar = Calendar.getInstance();
+    Calendar calendar = Calendar.getInstance(), timeStartCalendar = Calendar.getInstance(), 
+            timeFinishCalendar = Calendar.getInstance(), calendarChosen = Calendar.getInstance();
     String dataDate;
     String [] repeatList, tagListNames, tagListColors, tagTextColors;
     int dataDayRepeat = 0, dataWeekRepeat = 0, tagCount = 0, curTag = 0;
     Integer [] dataTags = {-1, -1, -1};
     boolean timeStartSet = false;
+    
+    private final OnOkButtonClickListener onOkButtonClickListener;
 
     public UpdateBottomSheet(String id, String name, String date, String day_of_week,
                              String periodicity, String time_start, String time_finish,
-                             String tags, String text_note, String pic_note, String audio_note)
+                             String tags, String text_note, String pic_note, String audio_note,
+                             OnOkButtonClickListener onOkButtonClickListener)
     {
         this.d_id = id;
         this.d_name = name;
@@ -63,6 +67,7 @@ public class UpdateBottomSheet extends BottomSheetDialogFragment {
         this.d_text_note = text_note;
         this.d_pic_note = pic_note;
         this.d_audio_note = audio_note;
+        this.onOkButtonClickListener = onOkButtonClickListener;
     }
 
     @Nullable
@@ -85,16 +90,17 @@ public class UpdateBottomSheet extends BottomSheetDialogFragment {
         button_cancel = view.findViewById(R.id.button_cancel);
         button_delete = view.findViewById(R.id.button_delete);
 
-        try { calendar.setTime(new SimpleDateFormat("yyyy/MM/dd").parse(d_date));
-        } catch (ParseException e) { e.printStackTrace(); }
+        try { 
+            calendar.setTime(new SimpleDateFormat("yyyy/MM/dd").parse(d_date));
+            calendarChosen.setTime(calendar.getTime());
+        } 
+        catch (ParseException e) { e.printStackTrace(); }
 
         try { timeStartCalendar.setTime(new SimpleDateFormat("HH:mm").parse(d_time_start));
         } catch (ParseException e) { e.printStackTrace(); }
 
         try { timeFinishCalendar.setTime(new SimpleDateFormat("HH:mm").parse(d_time_finish));
         } catch (ParseException e) { e.printStackTrace(); }
-
-        
 
         repeatList = getResources().getStringArray(R.array.repeat);
         tagListNames = getResources().getStringArray(R.array.tag_names);
@@ -174,10 +180,10 @@ public class UpdateBottomSheet extends BottomSheetDialogFragment {
                         R.style.CustomDatePickerTheme, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                        calendar.set(year, month, day);
-                        date.setText(dataWeekRepeat == 0? new SimpleDateFormat("d MMMM y, EEEE").format(calendar.getTime())
-                                : new SimpleDateFormat("EEEE").format(calendar.getTime()));
-                        dataDate = new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime());
+                        calendarChosen.set(year, month, day);
+                        date.setText(dataWeekRepeat == 0? new SimpleDateFormat("d MMMM y, EEEE").format(calendarChosen.getTime())
+                                : new SimpleDateFormat("EEEE").format(calendarChosen.getTime()));
+                        dataDate = new SimpleDateFormat("yyyy/MM/dd").format(calendarChosen.getTime());
                     }
                 }, year, month, day);
                 datePickerDialog.show();
@@ -366,6 +372,7 @@ public class UpdateBottomSheet extends BottomSheetDialogFragment {
                             textNote.getText().toString(),
                             "NULL",
                             "NULL");
+                    onOkButtonClickListener.onOkButtonClick(UpdateBottomSheet.this.calendar);
                     dismiss();
                 }
             }
@@ -420,5 +427,9 @@ public class UpdateBottomSheet extends BottomSheetDialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.CustomBottomSheetTheme);
         super.onCreate(savedInstanceState);
+    }
+
+    public interface OnOkButtonClickListener {
+        void onOkButtonClick(Calendar calendar);
     }
 }

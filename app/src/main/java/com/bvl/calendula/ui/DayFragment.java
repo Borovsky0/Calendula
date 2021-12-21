@@ -18,13 +18,14 @@ import com.bvl.calendula.DatabaseHelper;
 import com.bvl.calendula.ElementAdapterDay;
 import com.bvl.calendula.R;
 import com.bvl.calendula.ScrollAdapter;
+import com.bvl.calendula.UpdateBottomSheet;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickListener, 
-        AddBottomSheet.OnOkButtonClickListener {
+        AddBottomSheet.OnOkButtonClickListener, UpdateBottomSheet.OnOkButtonClickListener {
     
     private static final String FRAGMENT_TYPE = "DAY";    
     
@@ -79,11 +80,10 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
         audio_note = new ArrayList<>();
         done = new ArrayList<>();
 
-        //Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(getArguments().getLong("date"));
         toArrays(calendar);
 
-        adapter = new ElementAdapterDay(DayFragment.this.getActivity(),
+        adapter = new ElementAdapterDay(DayFragment.this,
                 id, name, date, day_repeat, week_repeat, time_start,
                 time_finish, tags, text_note, pic_note, audio_note, done);
         recyclerView.setAdapter(adapter);
@@ -117,9 +117,6 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
     @Override
     public void onDateClick(Calendar calendar) {
         clearData();
-        //int dif = Integer.MAX_VALUE / 2 - position;
-        //Calendar calendar = Calendar.getInstance();
-        //calendar.add(Calendar.DATE, -dif);
         this.calendar.clear();
         this.calendar.setTime(calendar.getTime());
         toArrays(calendar);
@@ -127,7 +124,7 @@ public class DayFragment extends Fragment implements ScrollAdapter.OnDateClickLi
     }
 
     @Override
-    public void onOkButtonClick(Calendar calendar) {
+    public void  onOkButtonClick(Calendar calendar) {
         clearData();
         toArrays(calendar);
         adapter.notifyDataSetChanged();
