@@ -8,8 +8,7 @@
         <item name="colorAccent">@color/black_secondary</item>
         <item name="colorOnSecondary">@color/black_gray</item>
         <!--  Status bar color.  -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorOnBackground</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:statusBarColor" tools:targetApi="23">@color/black</item>
         <!--  Font.  -->
         <item name="fontFamily">@font/nunito</item>
     </style>

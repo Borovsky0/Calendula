@@ -1,6 +1,9 @@
 package com.bvl.calendula;
 
+import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
@@ -10,6 +13,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -129,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements Communicator {
                 editor.putInt("Theme", 0);
                 editor.apply();
                 button.setImageResource(R.drawable.ic_theme_dark);
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                 break;
             case 1:
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -144,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements Communicator {
                 switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
                     case Configuration.UI_MODE_NIGHT_NO:
                         button.setImageResource(R.drawable.ic_theme_dark);
+                        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                         break;
                     case Configuration.UI_MODE_NIGHT_YES:
                         button.setImageResource(R.drawable.ic_theme_light);
